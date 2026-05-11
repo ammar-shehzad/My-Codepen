@@ -1,3 +1,5 @@
+"use client"
+
 import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 
 
@@ -50,7 +52,8 @@ return(
 <>
 
 <style>
-  {css}
+  {/* {css} */}
+  {localStorage.getItem("css")}
 </style>
 
 
@@ -66,7 +69,7 @@ return(
 
 
    <div
-          dangerouslySetInnerHTML={{ __html: html || ""}}
+          dangerouslySetInnerHTML={{ __html:localStorage.getItem("html")  || ""}}
         />
 
 
@@ -76,7 +79,9 @@ return(
 
 
 <script>
-  {`${javascript}`}
+  {/* {`${javascript}`} */}
+  {`${localStorage.getItem("javascript")}`}
+
 </script>
    </>
 

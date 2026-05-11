@@ -12,6 +12,7 @@ const[css,setCss]=useState<string|undefined>("/* Enter Css Here */")
 
 const[javascript,setJavascript]=useState<string|undefined>("// Edit Javascript Here")
 const [consoleErrors,setConsoleErrors]=useState<any>()
+const [errCount,setErrCount]=useState<number>(0)
 const [isError,setIsError]=useState(false)
 
   useEffect(() => {
@@ -19,8 +20,8 @@ const [isError,setIsError]=useState(false)
  
       new Function(javascript || "")();
     } catch (err:any) {
-      // setConsoleErrors(err)
-      // console.error("Error executing JS", err);
+      setConsoleErrors(err)
+      console.error("Error executing JS", err);
       setIsError(true)
     }
   }, [javascript]);
@@ -31,6 +32,7 @@ let orignalConsoleError=console.error
 
 
 console.error=(...args)=>{
+  setErrCount(prev=>prev+1)
   setConsoleErrors(args.map(arg=>arg.toString()).join(' '));
 
 orignalConsoleError.apply(console,args)
@@ -50,7 +52,7 @@ return ()=>{
 
   return (
    
-<MainPage html={html} css={css} javascript={javascript} setHtml={setHtml} setCss={setCss} setJavascript={setJavascript} consoleErrors={consoleErrors} setConsoleErrors={setConsoleErrors} />
+<MainPage html={html} css={css} javascript={javascript} setHtml={setHtml} setCss={setCss} setJavascript={setJavascript} consoleErrors={consoleErrors} setConsoleErrors={setConsoleErrors} errCount={errCount} setErrCount={setErrCount} />
 
   );
 }
