@@ -1,58 +1,64 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 import CodeEditor from "./Component/CodeEditor";
 import MainPage from "./Component/MainPage";
 
-
 export default function Home() {
+  const [html, setHtml] = useState<string | undefined>("");
+  const [css, setCss] = useState<string | undefined>("/* Enter Css Here */");
 
-const[html,setHtml]=useState<string|undefined>("")
-const[css,setCss]=useState<string|undefined>("/* Enter Css Here */")
-
-const[javascript,setJavascript]=useState<string|undefined>("// Edit Javascript Here")
-const [consoleErrors,setConsoleErrors]=useState<any>()
-const [errCount,setErrCount]=useState<number>(0)
-const [isError,setIsError]=useState(false)
+  const [javascript, setJavascript] = useState<string | undefined>(
+    "// Edit Javascript Here",
+  );
+  const [consoleErrors, setConsoleErrors] = useState<any>();
+  const [errCount, setErrCount] = useState<number>(0);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
+
     try {
- 
       new Function(javascript || "")();
-    } catch (err:any) {
-      setConsoleErrors(err)
+      // alert("javascript working")
+    } catch (err: any) {
+      setConsoleErrors(err);
       console.error("Error executing JS", err);
-      setIsError(true)
+      setIsError(true);
     }
+
+
+    
   }, [javascript]);
 
+  useEffect(() => {
+    
 
-useEffect(()=>{
-let orignalConsoleError=console.error
+    let orignalConsoleError = console.error;
 
+    console.error = (...args) => {
+      setErrCount((prev) => prev + 1);
+      setConsoleErrors(args.map((arg) => arg.toString()).join(" "));
 
-console.error=(...args)=>{
-  setErrCount(prev=>prev+1)
-  setConsoleErrors(args.map(arg=>arg.toString()).join(' '));
+      orignalConsoleError.apply(console, args);
+    };
 
-orignalConsoleError.apply(console,args)
-
-}
-
-return ()=>{
-  console.error=orignalConsoleError
-
-}
-
-
-},[isError])
-
-
-
+    return () => {
+      console.error = orignalConsoleError;
+    };
+  }, []);
 
   return (
-   
-<MainPage html={html} css={css} javascript={javascript} setHtml={setHtml} setCss={setCss} setJavascript={setJavascript} consoleErrors={consoleErrors} setConsoleErrors={setConsoleErrors} errCount={errCount} setErrCount={setErrCount} />
-
+    <MainPage
+      html={html}
+      css={css}
+      javascript={javascript}
+      setHtml={setHtml}
+      setCss={setCss}
+      setJavascript={setJavascript}
+      consoleErrors={consoleErrors}
+      setConsoleErrors={setConsoleErrors}
+      errCount={errCount}
+      setErrCount={setErrCount}
+    />
   );
 }

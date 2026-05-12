@@ -69,6 +69,7 @@ return(
 
 
    <div
+   className="editor-output"
           dangerouslySetInnerHTML={{ __html:localStorage.getItem("html")  || ""}}
         />
 
