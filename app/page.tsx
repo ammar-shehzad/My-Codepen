@@ -1,28 +1,46 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CodeEditor from "./Component/CodeEditor";
 import MainPage from "./Component/MainPage";
+import ProductPage from "./product/[id]/page";
+import Link from "next/link";
+import IndexPage from "./index/page";
 
 export default function Home() {
   const [html, setHtml] = useState<string | undefined>("");
   const [css, setCss] = useState<string | undefined>("/* Enter Css Here */");
 
   const [javascript, setJavascript] = useState<string | undefined>(
-    "// Edit Javascript Here",
+    "",
   );
-  const [consoleErrors, setConsoleErrors] = useState<any>();
-  const [errCount, setErrCount] = useState<number>(0);
+  const [consoleErrors, setConsoleErrors] = useState<string[]>([]);
   const [isError, setIsError] = useState(false);
+  const [logs,setLogs]=useState<string[]>([])
+  // const isHijacked=useRef(false)
+  
+  const [isOpen, setIsOpen] = useState(false);
+  const [errCount, setErrCount] = useState<number>(0);
+  const [fileName,setFileName]=useState<string>("Untitled")
+  const [role,setRole]=useState<string>("private")
+  
+  let orignalLogRef=useRef(console.log)
 
+
+  let errCountRef=useRef(0)
+  
   useEffect(() => {
-
+setLogs([])
+setConsoleErrors([])
+// setErrCount([0])
     try {
       new Function(javascript || "")();
       // alert("javascript working")
     } catch (err: any) {
-      setConsoleErrors(err);
-      console.error("Error executing JS", err);
+          //  errCountRef.current +=1
+          setErrCount((prev)=>prev+1); 
+      setConsoleErrors(err.message || "Unknown Error");
+      // console.error("Error executing JS", err);
       setIsError(true);
     }
 
@@ -36,8 +54,10 @@ export default function Home() {
     let orignalConsoleError = console.error;
 
     console.error = (...args) => {
-      setErrCount((prev) => prev + 1);
-      setConsoleErrors(args.map((arg) => arg.toString()).join(" "));
+      // setErrCount((prev) => prev + 1);
+ 
+
+      setConsoleErrors(args.map((arg) => arg.toString()));
 
       orignalConsoleError.apply(console, args);
     };
@@ -45,10 +65,48 @@ export default function Home() {
     return () => {
       console.error = orignalConsoleError;
     };
-  }, []);
+  },[]);
+
+
+
+  useEffect(()=>{
+//     console.log(isHijacked)
+// if (isHijacked.current) return
+
+// let orignalConsoleLog=console.log;
+
+console.log=(...args)=>{
+
+const consoleLogMessage=args.map(a => String(a)).join(" ")
+
+      setLogs((prev) => [...prev, consoleLogMessage]);
+      orignalLogRef.current.apply(console,args)
+}
+
+// isHijacked.current=true
+
+return ()=>{
+  console.log=orignalLogRef.current
+  // isHijacked.current=false
+}
+
+
+  },[isOpen])
+
+
+
 
   return (
-    <MainPage
+    <>
+    {/* <h1>Hello world</h1>
+        <Link href="/MainPage" className="text-black">
+  <button className="border-2 px-7 py-4 bg-amber-400 text-black rounded">
+          View
+      </button>
+        </Link> */}
+
+
+        {/* <MainPage
       html={html}
       css={css}
       javascript={javascript}
@@ -59,6 +117,21 @@ export default function Home() {
       setConsoleErrors={setConsoleErrors}
       errCount={errCount}
       setErrCount={setErrCount}
-    />
+      logs={logs}
+      setLogs={setLogs}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      fileName={fileName}
+      setFileName={setFileName}
+      role={role}
+      setRole={setRole}
+    /> */}
+
+
+<IndexPage/>
+
+</>
+
+
   );
 }

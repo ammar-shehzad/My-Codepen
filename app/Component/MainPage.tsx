@@ -8,7 +8,7 @@ import {
 } from "react";
 import CodeEditor from "./CodeEditor";
 import Header from "./Header";
-import MyTerminal from "./MyTerminal";
+
 
 interface MainPageProps {
   html: string | undefined;
@@ -21,6 +21,14 @@ interface MainPageProps {
   setConsoleErrors: Dispatch<SetStateAction<any>>;
   errCount: number;
   setErrCount: Dispatch<SetStateAction<number>>;
+  logs:string[]
+  setLogs:Dispatch<SetStateAction<string[]>>;
+  isOpen:boolean;
+  setIsOpen:Dispatch<SetStateAction<boolean>>;
+  fileName:string;
+  setFileName:Dispatch<SetStateAction<string>>
+  role:string
+  setRole:Dispatch<SetStateAction<string>>
 }
 
 const MainPage: React.FC<MainPageProps> = ({
@@ -34,14 +42,27 @@ const MainPage: React.FC<MainPageProps> = ({
   setConsoleErrors,
   errCount,
   setErrCount,
+  logs,
+  setLogs,
+  isOpen,
+  setIsOpen,
+  fileName,
+  setFileName,
+  role,
+  setRole
+
 }) => {
   const [finalOutput, setFinalOutput] = useState("");
   const [runCodeButton, setRunCodeButton] = useState<any>();
 
-  const runCode = () => {
+  const runCode = (e:any) => {
       const combinedCode = `
       <html>
-    
+  <head>
+  <style>
+    ${css} 
+  </style>
+</head>
         <body>
           ${html}
           <script>
@@ -61,7 +82,7 @@ const MainPage: React.FC<MainPageProps> = ({
     
       setFinalOutput(combinedCode);
 
-      console.log(runCodeButton);
+
     };
 
 
@@ -89,7 +110,7 @@ const MainPage: React.FC<MainPageProps> = ({
   let dragging = useRef(false);
   let MaxHeight = 491;
   const [rowHeight, setRowHeight] = useState<number>(200);
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
   const [consoleErr2, setConsoleErr2] = useState<any>();
 
   const startResizing = useCallback(() => {
@@ -125,7 +146,7 @@ const MainPage: React.FC<MainPageProps> = ({
 
   return (
     <div className=" relative flex flex-col min-h-screen">
-      <style>{css}</style>
+      {/* <style>{css}</style> */}
 
       <div className="flex-none">
         <div className="grid w-full grid-cols-12 gap-1 py-5 mx-auto  bg-black">
@@ -135,6 +156,10 @@ const MainPage: React.FC<MainPageProps> = ({
             javascript={javascript}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
+            fileName={fileName}
+            setFileName={setFileName}
+            role={role}
+            setRole={setRole}
           />
         </div>
 
@@ -214,11 +239,11 @@ const MainPage: React.FC<MainPageProps> = ({
             }}
           >
             Console
-            {errCount > 0 && (
+            {/* {errCount > 0 && ( */}
               <span className="text-white mx-2 px-1 bg-red-500 rounded-2xl">
                 {errCount}
               </span>
-            )}
+            {/* )} */}
           </a>
 
           {isOpen && (
@@ -239,9 +264,25 @@ const MainPage: React.FC<MainPageProps> = ({
         {isOpen && (
           <div
             className="col-span-12 py-5 text-white bg-black"
-            style={{ height: "100px" }}
+            style={{ height: "100px",overflowY:"auto" }}
           >
-            {consoleErrors}
+            {/* <p>
+
+{logs}
+</p> */}
+            {/* <br> */}
+{consoleErrors} 
+
+
+
+  {logs.map((log, index) => (
+    <div key={index}>{log}</div> 
+  ))}
+
+
+
+
+<br />
           </div>
         )}
       </div>
