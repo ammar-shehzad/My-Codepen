@@ -29,69 +29,72 @@ export default function Home() {
 
   let errCountRef=useRef(0)
   
-  useEffect(() => {
-setLogs([])
-setConsoleErrors([])
-// setErrCount([0])
-    try {
-      new Function(javascript || "")();
-      // alert("javascript working")
-    } catch (err: any) {
-          //  errCountRef.current +=1
-          setErrCount((prev)=>prev+1); 
-      setConsoleErrors(err.message || "Unknown Error");
-      // console.error("Error executing JS", err);
-      setIsError(true);
-    }
+//   useEffect(() => {
+// setLogs([])
+// setConsoleErrors([])
+// // setErrCount([0])
+//     try {
+//       new Function(javascript || "")();
+//       // alert("javascript working")
+//     } catch (err: any) {
+//           //  errCountRef.current +=1
+//           setErrCount((prev)=>prev+1); 
+//       setConsoleErrors(err.message || "Unknown Error");
+//       // console.error("Error executing JS", err);
+//       setIsError(true);
+//     }
 
 
     
-  }, [javascript]);
+//   }, [javascript]);
 
-  useEffect(() => {
+
+
+
+
+
+  // useEffect(() => {
     
 
-    let orignalConsoleError = console.error;
+  //   let orignalConsoleError = console.error;
 
-    console.error = (...args) => {
-      // setErrCount((prev) => prev + 1);
+  //   console.error = (...args) => {
+  //     // setErrCount((prev) => prev + 1);
  
 
-      setConsoleErrors(args.map((arg) => arg.toString()));
+  //     setConsoleErrors(args.map((arg) => arg.toString()));
 
-      orignalConsoleError.apply(console, args);
-    };
+  //     orignalConsoleError.apply(console, args);
+  //   };
 
-    return () => {
-      console.error = orignalConsoleError;
-    };
-  },[]);
-
-
-
-  useEffect(()=>{
-//     console.log(isHijacked)
-// if (isHijacked.current) return
-
-// let orignalConsoleLog=console.log;
-
-console.log=(...args)=>{
-
-const consoleLogMessage=args.map(a => String(a)).join(" ")
-
-      setLogs((prev) => [...prev, consoleLogMessage]);
-      orignalLogRef.current.apply(console,args)
-}
-
-// isHijacked.current=true
-
-return ()=>{
-  console.log=orignalLogRef.current
-  // isHijacked.current=false
-}
+  //   return () => {
+  //     console.error = orignalConsoleError;
+  //   };
+  // },[]);
 
 
-  },[isOpen])
+
+
+
+
+//   useEffect(()=>{
+
+
+// console.log=(...args)=>{
+
+// const consoleLogMessage=args.map(a => String(a)).join(" ")
+
+//       setLogs((prev) => [...prev, consoleLogMessage]);
+//       orignalLogRef.current.apply(console,args)
+// }
+
+
+// return ()=>{
+//   console.log=orignalLogRef.current
+// }
+
+
+//   },[isOpen])
 
 
 

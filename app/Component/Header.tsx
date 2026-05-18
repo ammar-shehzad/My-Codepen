@@ -11,11 +11,13 @@ setIsOpen:Dispatch<SetStateAction<boolean>>
 fileName:string
 setFileName:Dispatch<SetStateAction<string>>
   role:string,
-  setRole:Dispatch<SetStateAction<string>>
+  setRole:Dispatch<SetStateAction<string>>,
+  publicView:boolean,
+  setPublicView:Dispatch<SetStateAction<boolean>>
 
 }
 
-const Header:React.FC<HeaderProps>=({html,css,javascript,fileName,setFileName,role,setRole})=>{
+const Header:React.FC<HeaderProps>=({html,css,javascript,fileName,setFileName,role,setRole,publicView,setPublicView})=>{
 
 const [isChangeName,setIsChangeName]=useState<boolean>(false)
 
@@ -32,16 +34,19 @@ window.open('/FullTabView','_blank')
 
 
 
+
+
 const handleFileSubmit=async()=>{
 if(html!=""){
   
 const { data, error } = await supabase
   .from('NoteBooks')
   .select('*')
-  .eq('User_Id',localStorage.getItem("user"))
+  .eq('User_Id',localStorage.getItem("userId"))
 
 if(error){
   toast.error(error.message)
+  console.log(error.message)
 
 }else{
  console.log( data[0])
@@ -63,11 +68,12 @@ if(error){
     Css : css,
     Javascript: javascript || "",
     Role: role,
-    User_Id:localStorage.getItem("user"),
+    User_Id:Number(localStorage.getItem("userId")),
     userName:localStorage.getItem("userName")
    })
 
 if(InsertError){
+  console.log(InsertError.message)
   toast.error(InsertError.message)
 }else{
   toast.success("NoteBook Saved SuccessFully")
@@ -101,7 +107,10 @@ return(
 !isChangeName?
   <span className="text-white text-xl font-bold">
     {fileName}
+    {!publicView && (
     <i className="fa-solid fa-pen" style={{color: "rgb(254, 254, 254)"}} onClick={()=>setIsChangeName(true)} ></i>
+    )}
+
     <p className="text-white text-sm capitalize">{localStorage.getItem("userName")|| "No User"}</p>
   </span>
   :
@@ -119,7 +128,7 @@ setIsChangeName(false)
 
 </div>
 
-<div className="space-x-2">
+<div className="space-x-2 flex">
 
 
     
@@ -136,13 +145,19 @@ setIsChangeName(false)
 
 
 
-
-<select name="role" id="" value={role}  className=" w-2xs rounded-md border border-gray-700 bg-gray-950 p-2.5 text-sm text-white shadow-sm focus:border-blue-500 focus:ring-blue-500" onChange={(e)=>{setRole(e.target.value)}} >
+ {!publicView ?
+    <select name="role" id="" value={role}  className=" w-2xs rounded-md border border-gray-700 bg-gray-950 p-2.5 text-sm text-white shadow-sm focus:border-blue-500 focus:ring-blue-500" onChange={(e)=>{setRole(e.target.value)}} >
 
 <option value="public">Public</option>
 <option value="private">Private</option>
 
-</select>
+</select>:
+<p className="text-white text-sm capitalize  w-2xs rounded-md border border-gray-700 bg-gray-950 p-2.5 text-sm text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">{role}</p>
+
+
+    }
+
+
 
 <button 
   type="button" 
@@ -161,6 +176,8 @@ Open In New Tab
 </button>
 
 
+ {!publicView && (
+ 
 <button 
   type="button" 
   className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
@@ -171,6 +188,11 @@ Open In New Tab
   Save
 </button>
 
+    )}
+
+
+
+ {!publicView && (
 
 <button 
   type="button" 
@@ -179,6 +201,11 @@ Open In New Tab
   <span className="mx-2"><i className="fa-solid fa-gear" style={{color:" rgb(254, 254, 254)"}}></i></span>
   Settings
 </button>
+
+    )}
+
+
+
 
 
 
@@ -211,12 +238,13 @@ localStorage.getItem("userId")?
 </button>
 :
 
-<button 
+<a
+href="/login" 
   type="button" 
   className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
 >
 
-Login</button>
+Login</a>
 
 
 }

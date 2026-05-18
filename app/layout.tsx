@@ -32,7 +32,7 @@ export default function RootLayout({
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
       </head>
       <Toaster position="top-right"/>
-      <body className="min-h-full flex flex-col overflow-hidden">{children}</body>
+      <body className="min-h-full flex flex-col ">{children}</body>
     </html>
   );
 }
