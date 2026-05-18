@@ -26,6 +26,7 @@ import { TabsDemo } from "@/components/header-tabs"
 import { buttonVariants } from "@/components/ui/button"
 import { Link } from "lucide-react"
 import { NavigationMenuDemo } from "@/components/navigation-menu"
+import { InputInline } from "@/components/search-input"
 
 interface HomeProps{
 
@@ -279,7 +280,7 @@ return(
 
 <NavigationMenuDemo isPublic={isPublic} setIsPublic={setIspublic}/>
 
-
+<InputInline/>
 
 
           </div>

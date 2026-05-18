@@ -1,6 +1,18 @@
+import { ButtonSecondary } from "@/components/button-secondary"
+import { Button } from "@/components/ui/button"
 import { supabase } from "@/utills/supabase/client"
 import { Dispatch, SetStateAction, useState } from "react"
 import toast from "react-hot-toast"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 
 interface HeaderProps{
 html: string | undefined
@@ -144,8 +156,47 @@ setIsChangeName(false)
     
 
 
-
  {!publicView ?
+  <Select value={role} onValueChange={(newValue) =>setRole(newValue)} >
+      <SelectTrigger className="w-full max-w-48 text-white">
+        <SelectValue placeholder="Select a Role" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Roles</SelectLabel>
+          <SelectItem value="public">Public</SelectItem>
+          <SelectItem value="private">Private</SelectItem>
+      
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+
+ :
+// {/* <p>{role}</p> */}
+// {/* <p className="text-white text-sm capitalize  w-2xs rounded-md border border-gray-700 bg-gray-950 p-2.5 text-sm text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">{role}</p> */}
+
+  <Select value={role}  >
+      <SelectTrigger className="w-full max-w-48 text-white">
+        <SelectValue placeholder="Select a Role" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Roles</SelectLabel>
+          <SelectItem value="public">Public</SelectItem>
+          <SelectItem value="private">Private</SelectItem>
+      
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+
+    }
+
+
+
+
+
+
+ {/* {!publicView ?
     <select name="role" id="" value={role}  className=" w-2xs rounded-md border border-gray-700 bg-gray-950 p-2.5 text-sm text-white shadow-sm focus:border-blue-500 focus:ring-blue-500" onChange={(e)=>{setRole(e.target.value)}} >
 
 <option value="public">Public</option>
@@ -155,38 +206,36 @@ setIsChangeName(false)
 <p className="text-white text-sm capitalize  w-2xs rounded-md border border-gray-700 bg-gray-950 p-2.5 text-sm text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">{role}</p>
 
 
-    }
+    } */}
 
 
 
-<button 
-  type="button" 
-  className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
-  onClick={handleView}
->
+  
+<Button variant="secondary" onClick={handleView}>
+
 Open In New Tab
-</button>
+</Button>
 
-<button 
-  type="button" 
-  className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
+<Button 
+  // type="button" 
+  // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
 >
 {/* Add Wishlist */}
 <i className="fa-solid fa-heart" style={{color:' rgb(255, 255, 255)'}}></i>
-</button>
+</Button>
 
 
  {!publicView && (
  
-<button 
-  type="button" 
-  className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
+<Button 
+  // type="button" 
+  // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
   onClick={handleFileSubmit}
 >
   <i className="fa-solid fa-cloud mx-0.5" style={{color:' rgb(255, 255, 255)'}}></i>
 
   Save
-</button>
+</Button>
 
     )}
 
@@ -194,13 +243,13 @@ Open In New Tab
 
  {!publicView && (
 
-<button 
-  type="button" 
-  className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
+<Button 
+  // type="button" 
+  // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
 >
   <span className="mx-2"><i className="fa-solid fa-gear" style={{color:" rgb(254, 254, 254)"}}></i></span>
   Settings
-</button>
+</Button>
 
     )}
 
@@ -209,33 +258,33 @@ Open In New Tab
 
 
 
-<button 
-  type="button" 
-  className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
+<Button 
+  // type="button" 
+  // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
 >
 
 <i className="fa-solid fa-eye" style={{color: "rgb(255, 255, 255)"}}></i>
 
-</button>
+</Button>
 
 
 
 
-<button 
-  type="button" 
-  className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
+<Button 
+  // type="button" 
+  // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
 >
-<i className="fa-regular fa-bookmark" style={{color: "rgb(255, 255, 255)"}}></i></button>
+<i className="fa-regular fa-bookmark" style={{color: "rgb(255, 255, 255)"}}></i></Button>
 
 {
 localStorage.getItem("userId")?
-<button 
-  type="button" 
-  className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
+<Button 
+  // type="button" 
+  // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
 >
 
   <i className="fa-solid fa-user" style={{color: "rgb(255, 255, 255)"}}></i>
-</button>
+</Button>
 :
 
 <a
@@ -265,5 +314,8 @@ Login</a>
 }
 
 export default Header
+
+
+
 
 

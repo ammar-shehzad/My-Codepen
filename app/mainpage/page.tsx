@@ -11,6 +11,17 @@ import Header from "../Component/Header";
 import CodeEditor from "../Component/CodeEditor";
 import { supabase } from "@/utills/supabase/client";
 import toast from "react-hot-toast";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+
 // import CodeEditor from "./CodeEditor";
 // import Header from "./Header";
 

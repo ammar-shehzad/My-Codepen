@@ -24,12 +24,12 @@ const data = {
   },
   teams: [
     {
-      name: "Acme Inc",
+      name: "Codepen",
       logo: (
         <GalleryVerticalEndIcon
         />
       ),
-      plan: "Enterprise",
+      plan: "",
     },
     {
       name: "Acme Corp.",
