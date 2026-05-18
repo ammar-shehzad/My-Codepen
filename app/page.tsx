@@ -6,6 +6,9 @@ import MainPage from "./Component/MainPage";
 import ProductPage from "./product/[id]/page";
 import Link from "next/link";
 import IndexPage from "./index/page";
+import Page from "./dashboard/page";
+import { ThemeProvider } from "@/components/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export default function Home() {
   const [html, setHtml] = useState<string | undefined>("");
@@ -131,7 +134,28 @@ export default function Home() {
     /> */}
 
 
+{/* <Page/> */}
+
+
+     <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+
+
+        <TooltipProvider>
+
+
 <IndexPage/>
+
+
+      
+        </TooltipProvider>
+          </ThemeProvider>
+
+
 
 </>
 
