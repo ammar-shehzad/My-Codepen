@@ -109,21 +109,21 @@ return(
 <>
 
 
-<div className="col-span-12  flex justify-between">
+<div className="col-span-12 py-2 flex justify-between">
 
-<div>
+<div >
 
 
 
 {
 !isChangeName?
-  <span className="text-white text-xl font-bold">
+  <span className="text-white text-xl ml-3 font-bold">
     {fileName}
     {!publicView && (
     <i className="fa-solid fa-pen" style={{color: "rgb(254, 254, 254)"}} onClick={()=>setIsChangeName(true)} ></i>
     )}
 
-    <p className="text-white text-sm capitalize">{localStorage.getItem("userName")|| "No User"}</p>
+    <p className="text-white text-sm capitalize ml-3">{localStorage.getItem("userName")|| "No User"}</p>
   </span>
   :
 <form 

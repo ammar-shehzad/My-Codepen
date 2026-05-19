@@ -12,14 +12,10 @@ import CodeEditor from "../Component/CodeEditor";
 import { supabase } from "@/utills/supabase/client";
 import toast from "react-hot-toast";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable"
 
 
 // import CodeEditor from "./CodeEditor";
@@ -262,8 +258,208 @@ const MainPage: React.FC<MainPageProps> = ({
     }
   }, [isOpen]);
 
+// ===================================strating changes=======================
+
   return (
-    <div className=" relative flex flex-col min-h-screen">
+
+
+
+
+    <>
+
+{/* ========================================================== */}
+<div className="grid grid-cols-12 ">
+  <div className="col-span-12   bg-black">
+      <Header
+            html={html}
+            css={css}
+            javascript={javascript}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            fileName={fileName}
+            setFileName={setFileName}
+            role={role}
+            setRole={setRole}
+            publicView={publicView}
+            setPublicView={setPublicView}
+          />
+</div>
+</div>
+
+
+<div className="grid grid-cols-12 h-screen">
+
+
+{/* ====================================resizable content======================== */}
+<div className="col-span-12 p-0">
+
+
+ <ResizablePanelGroup 
+orientation="vertical"
+        className="min-h-[400px] h-full w-full rounded-lg border" 
+      > 
+        <ResizablePanel defaultSize={100}> 
+          <div className="flex h-full items-center justify-center"> 
+            <div className="grid grid-cols-12 w-full h-full"> 
+              <div className="col-span-4 h-full"> 
+                <CodeEditor editValue={html} setEditValue={setHtml} language="html" /> 
+              </div> 
+              <div className="col-span-4 h-full"> 
+                <CodeEditor editValue={css} setEditValue={setCss} language="css" /> 
+              </div> 
+              <div className="col-span-4 h-full"> 
+                <CodeEditor editValue={javascript} setEditValue={setJavascript} language="javascript" /> 
+              </div> 
+            </div> 
+          </div> 
+        </ResizablePanel> 
+        <ResizableHandle /> 
+        <ResizablePanel defaultSize={75}> 
+          <div className="flex h-full"> 
+
+
+ <div className="flex h-full items-center justify-center"> 
+            <div className="grid grid-cols-12 w-full h-full"> 
+            <div className="col-span-12">
+            {/* 
+      <div
+      className="editor-output"
+      dangerouslySetInnerHTML={{ __html: html || "" }} /> */}
+
+            <button
+              className="text-white bg-[#5A5F73] my-2 box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
+              onClick={runCode}
+            >
+              Run Code
+            </button>
+
+            <iframe
+              key={finalOutput}
+              srcDoc={finalOutput}
+              title="output"
+              sandbox="allow-scripts allow-modals allow-same-origin"
+              width="100%"
+              height="300px"
+            />
+          </div>
+            </div> 
+
+
+            
+          </div> 
+
+
+
+
+          </div> 
+        </ResizablePanel> 
+      </ResizablePanelGroup>
+
+   {/* <ResizablePanelGroup
+      orientation="vertical"
+      className="min-h-[400px] w-full rounded-lg border"
+    >
+      <ResizablePanel defaultSize="100%">
+        <div className="flex h-full items-center justify-center ">
+<div className="grid grid-cols-12 w-full">
+     <div className="col-span-4 h-full" style={{height:"100%"}}>
+            <CodeEditor
+              editValue={html}
+              setEditValue={setHtml}
+              language="html"
+            />
+          </div>
+
+          <div className="col-span-4 h-full "  style={{height:"100%"}}>
+            <CodeEditor editValue={css} setEditValue={setCss} language="css"  />
+          </div>
+
+          <div className="col-span-4 h-full" style={{height:"100%"}}>
+            <CodeEditor
+              editValue={javascript}
+              setEditValue={setJavascript}
+              language="javascript"
+            />
+          </div>
+
+</div>
+
+        </div>
+      </ResizablePanel>
+      <ResizableHandle />
+      <ResizablePanel defaultSize="75%">
+        <div className="flex h-full items-center justify-center p-6">
+          <span className="font-semibold">Content</span>
+        </div>
+      </ResizablePanel>
+    </ResizablePanelGroup> */}
+
+</div>
+
+{/* ====================================resizable content======================== */}
+
+ <div className=" fixed bottom-0 w-full grid-cols-12  bg-black ">
+        <div className="col-span-12 bg-gray-700 flex justify-between">
+          <a
+            className="text-white font-semibold cursor-pointer"
+            onClick={() => {
+              setIsOpen(!isOpen);
+            }}
+          >
+            Console
+            {/* {errCount > 0 && ( */}
+            <span className="text-white mx-2 px-1 bg-red-500 rounded-2xl">
+              {errCount}
+            </span>
+            {/* )} */}
+          </a>
+
+          {isOpen && (
+            <button
+              className="bg-gray-500 text-white p-1 cursor-pointer"
+              onClick={() => {
+                setConsoleErrors([]);
+                setErrCount(0);
+                setJavascript(javascript);
+              }}
+            >
+              Clear
+            </button>
+          )}
+        </div>
+
+        {isOpen && (
+          <div
+            className="col-span-12 py-5 text-white bg-black"
+            style={{ height: "100px", overflowY: "auto" }}
+          >
+            {/* <p>
+
+{logs}
+</p> */}
+            {/* <br> */}
+            {consoleErrors}
+
+            {logs.map((log, index) => (
+              <div key={index}>{log}</div>
+            ))}
+
+            <br />
+          </div>
+        )}
+      </div>
+
+
+</div>
+
+
+
+
+
+
+{/* ============================================================ */}
+
+    <div className=" hidden relative flex flex-col min-h-screen">
       {/* <style>{css}</style> */}
 
       <div className="flex-none">
@@ -292,6 +488,10 @@ const MainPage: React.FC<MainPageProps> = ({
             maxHeight: "491px",
           }}
         >
+
+
+
+
           <div className="col-span-4 h-full">
             <CodeEditor
               editValue={html}
@@ -403,7 +603,17 @@ const MainPage: React.FC<MainPageProps> = ({
 
       {/* <script>{`${javascript}`}</script> */}
     </div>
+
+    
+    </>
   );
 };
 
 export default MainPage;
+
+
+
+
+
+
+
