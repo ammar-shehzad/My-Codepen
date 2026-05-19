@@ -23,10 +23,13 @@ import {
 } from "@/components/ui/sidebar"
 import { TabsDemo } from "@/components/header-tabs"
 
-import { buttonVariants } from "@/components/ui/button"
-import { Link } from "lucide-react"
+import { Button, buttonVariants } from "@/components/ui/button"
+// import { Link } from "lucide-react"
 import { NavigationMenuDemo } from "@/components/navigation-menu"
 import { InputInline } from "@/components/search-input"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { SheetDemo } from "@/components/notification-sheet"
 
 interface HomeProps{
 
@@ -34,6 +37,14 @@ interface HomeProps{
 }
 
 
+interface RequestItem {
+  id: number;
+  userId: number;
+  userName:string;
+  OwnerId:number;
+  status:string
+  // add other fields from your database table
+}
 
 
 
@@ -46,8 +57,8 @@ const [publicFile,setPublicFile]=useState<{id:number;BookName:string;Html:string
 const [privateFile,setPrivateFile]=useState<{id:number;BookName:string;Html:string;Css:string;Javascript:string;Role:string;User_Id:number,userName:string}[]>([])
 
   const [isPublic,setIspublic]=useState<boolean>(true)
-
-
+const[requests,setRequests]=useState<RequestItem[]>([])
+const router=useRouter()
 const fetchPublicData=async()=>{
   
   const { data, error } = await supabase
@@ -77,10 +88,11 @@ if(data?.length){
 
 
 
+
+
 const fetchPrivateData=async()=>{
   
-// let userId=parseInt(localStorage.getItem("userId")||"")
-// console.log(typeof userId)
+
 
   const { data, error } = await supabase
               .from("NoteBooks")
@@ -109,38 +121,35 @@ if(data?.length){
 }
 
 
-// const fetchPrivateData=async()=>{
-
-//   console.log("working"+ localStorage.getItem('userId'))
-// if(localStorage.getItem('userId')){
-
-//   const { data, error } = await supabase
-//               .from("NoteBooks")
-//               .select("*")
-//               .eq("Role", "private")
-//               .eq("User_Id",Number(localStorage.getItem('userId')))
-
-// if(error){
-//   toast.error(error.message)
-//   console.log(error)
-// }
-
-// if(data?.length){
-//   setPrivateFile(data)
-// }
 
 
-// }else{
-//   console.log("No User Found")
-  
-// }
-// }
+const fetchRequests=async()=>{
+
+const { data, error } = await supabase
+  .from('Requests')
+  .select()
+  .eq('OwnerId',localStorage.getItem("userId"))
+
+if(error){
+  toast.error(error.message)
+}
+if(data?.length){
+  setRequests(data)
+  // setReqStatus(data[0].status)
+}else{
+console.log("No Notifications")
+}
+
+
+}
+
 
 
 
 useEffect(()=>{
   fetchPrivateData()
 fetchPublicData()
+fetchRequests()
 },[])
 
 
@@ -148,119 +157,7 @@ fetchPublicData()
 return(
 <>
 
-{/* <div className="grid grid-cols-12">
-  <div className="col-span-12">
-<HomeNavbar/>
 
-  </div>
-</div> */}
-
-
-{/* ===================old work============ */}
-
-{/* <div className="w-full grid grid-cols-12 ">
-
-<div className="col-span-1  ">
-
- <aside className="w-40 bg-[#1E1F26] text-white sticky top-0 h-screen p-4">
-  </aside>
-
-</div>
-
-<div className="col-span-10">
-
-<div className="container  ml-11 ">
-  <div className="grid w-full grid-cols-12 ">
-
-<div className="col-span-12  bg-black py-2 fixed w-full">
-<div className="grid grid-cols-12">
-<div className="col-span-3">
-<div className="flex justify-center items-center">
-      <div className="relative w-full max-w-xl">
-        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          <svg
-            className="w-5 h-5 text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            ></path>
-          </svg>
-        </div>
-        
-      
-        <input
-          type="search"
-          
-          className="block w-full p-4 pl-10 text-sm text-white border border-gray-600 rounded-lg bg-gray-800 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 outline-none transition"
-          placeholder="Search Pens, Projects, Posts..."
-        />
-      </div>
-    </div>
-</div>
-
-
-</div>
-
-
-
-
-</div>
-<div className="col-span-12">
-
-<div className="grid w-full grid-cols-12 ml-5 gap-4">
-
-{
-  publicFile.map((publicFiles)=>{
-    return(
-  <div className="col-span-3">
-<BookCard myFile={publicFiles}/>
-
-  </div>
-    )
-  })
-}
-</div>
-
-</div>
-
-
-
-
-</div>
-
-  <div className="grid w-full grid-cols-12 ml-5 gap-4 my-16">
-    <div className="col-span-12">
-      <h1>Private Files</h1>
-    </div>
-{
-  privateFile.map((privateFiles)=>{
-    return(
-  <div className="col-span-3">
-<BookCard myFile={privateFiles}/>
-
-  </div>
-    )
-  })
-}
-
-
-</div>
-
-</div>
-
-</div>
-
-
-</div> */}
-
-{/* ===================old work============ */}
 
 
 
@@ -270,7 +167,7 @@ return(
       <AppSidebar />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
+          <div className="flex w-full items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator
               orientation="vertical"
@@ -279,8 +176,28 @@ return(
     
 
 <NavigationMenuDemo isPublic={isPublic} setIsPublic={setIspublic}/>
+<SheetDemo requests={requests} setRequests={setRequests} fetchRequests={fetchRequests}/>
 
 <InputInline/>
+
+  <div className="flex-1" /> 
+  
+
+
+{
+  localStorage.getItem("userId")?
+<Button className="justify-end" onClick={()=>{
+  localStorage.clear()
+  setTimeout(() => {
+    router.push("/")
+  }, 2000);
+}
+}>Logout</Button>
+:
+<Button className="justify-end" > <Link href="/login"> LogIn</Link></Button>
+
+
+}
 
 
           </div>

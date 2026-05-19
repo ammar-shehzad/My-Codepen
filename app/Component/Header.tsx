@@ -1,7 +1,7 @@
 import { ButtonSecondary } from "@/components/button-secondary"
 import { Button } from "@/components/ui/button"
 import { supabase } from "@/utills/supabase/client"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import {
   Select,
@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useRouter } from "next/navigation"
 
 
 interface HeaderProps{
@@ -32,6 +33,9 @@ setFileName:Dispatch<SetStateAction<string>>
 const Header:React.FC<HeaderProps>=({html,css,javascript,fileName,setFileName,role,setRole,publicView,setPublicView})=>{
 
 const [isChangeName,setIsChangeName]=useState<boolean>(false)
+const[reqStatus,setReqStatus]=useState<string>("")
+
+const  router=useRouter()
 
 
 const handleView=()=>{
@@ -96,13 +100,117 @@ if(InsertError){
 
 
 }else{
-  toast.error("Html Not Is Empty")
+  toast.error("Html Is Empty")
 }
 
 
  
   
 }
+
+
+const handleRequestSubmit=async()=>{
+
+if(localStorage.getItem("userId")){
+  const { error } = await supabase
+  .from('Requests')
+  .insert({ 
+userId:localStorage.getItem("userId"),
+userName:localStorage.getItem("userName"),
+OwnerId:localStorage.getItem("ownerId"),
+status:"pending",
+fileName:fileName,
+bookId:Number(localStorage.getItem("BookId"))
+
+
+   })
+
+
+
+
+
+if(error){
+  toast.error(error.message)
+}else{
+  toast.success("Request Send !")
+}
+
+}else{
+  router.push("/login")
+}
+
+
+
+
+
+}
+
+
+
+const fetchReqstatus=async()=>{
+const { data, error } = await supabase
+  .from('Requests')
+  .select()
+  .eq('userId',localStorage.getItem("userId"))
+  .eq('bookId',localStorage.getItem("BookId"))
+
+if(error){
+  toast.error(error.message)
+}
+if(data?.length){
+  
+  setReqStatus(data[0].status)
+}else{
+console.log("No Book")
+}
+
+}
+
+
+
+
+
+
+const handleFileEditByOtherUser=async(bookId:any)=>{
+  
+
+
+    const { error:updateError } = await supabase
+  .from('NoteBooks')
+  .update({ 
+    
+    Html: html,
+    Css : css,
+    Javascript: javascript || "",
+    
+   })
+   .eq('id',bookId)
+
+if(updateError){
+  console.log(updateError.message)
+  toast.error(updateError.message)
+}else{
+  toast.success("NoteBook Saved SuccessFully")
+}
+
+
+
+
+
+
+
+ 
+  
+}
+
+
+
+
+useEffect(()=>{
+  fetchReqstatus()
+},[])
+
+
 
 return(
 
@@ -215,6 +323,34 @@ setIsChangeName(false)
 
 Open In New Tab
 </Button>
+
+
+ {publicView && (
+ 
+reqStatus=='approved'?
+
+<Button variant="secondary" onClick={()=>handleFileEditByOtherUser(Number(localStorage.getItem("BookId")))}>
+
+Save Changes
+</Button>
+:
+
+reqStatus==""&&(
+
+<Button variant="secondary" onClick={handleRequestSubmit}>
+
+Edit Request
+</Button>
+)
+
+    )}
+
+
+
+
+
+
+
 
 <Button 
   // type="button" 

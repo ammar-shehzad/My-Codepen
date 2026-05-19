@@ -4,6 +4,8 @@ import { supabase } from "@/utills/supabase/client";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { ThemeProvider } from "@/components/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 
 interface LoginInterface {}
@@ -65,7 +67,18 @@ toast.success("Log In Successfully")
 
   return (
     <>
-      <section className="bg-gray-50 dark:bg-gray-900">
+
+     <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+
+
+        <TooltipProvider>
+
+  <section>
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <a
             href="#"
@@ -146,6 +159,13 @@ handleUserLogin()
           </div>
         </div>
       </section>
+
+
+      
+        </TooltipProvider>
+          </ThemeProvider>
+    
+    
     </>
   );
 };

@@ -79,7 +79,9 @@ export function NavigationMenuDemo({isPublic,setIsPublic}:navigationProps) {
         </NavigationMenuItem>
 
 
-     <NavigationMenuItem>
+{
+  localStorage.getItem("userId") && (
+ <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
             <Link href={"#"} onClick={()=>{
               setIsPublic(false)
@@ -87,6 +89,10 @@ export function NavigationMenuDemo({isPublic,setIsPublic}:navigationProps) {
           </NavigationMenuLink>
         </NavigationMenuItem>
 
+  )
+}
+
+    
 
  <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>

@@ -15,8 +15,7 @@ import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@/components/ui/resizable"
-
+} from "@/components/ui/resizable";
 
 // import CodeEditor from "./CodeEditor";
 // import Header from "./Header";
@@ -93,7 +92,7 @@ const MainPage: React.FC<MainPageProps> = ({
     userName: string;
   }>();
 
-  const [publicView,setPublicView]=useState<boolean>(false)
+  const [publicView, setPublicView] = useState<boolean>(false);
   let orignalLogRef = useRef(console.log);
 
   let errCountRef = useRef(0);
@@ -118,15 +117,20 @@ const MainPage: React.FC<MainPageProps> = ({
             setJavascript(data[0].Javascript);
             setFileName(data[0].BookName);
             setRole(data[0].Role);
+            localStorage.setItem("ownerId", data[0].User_Id);
+            localStorage.setItem("fileName", data[0].BookName);
+            localStorage.setItem("BookId", data[0].id);
 
-            setPublicView(true)
+            setPublicView(true);
           }
         }
       };
 
-      fetchNotebook();
+      setTimeout(() => {
+        fetchNotebook();
+      }, 2000);
     }
-  },[]);
+  }, [noteBookId]);
 
   useEffect(() => {
     setLogs([]);
@@ -203,24 +207,6 @@ const MainPage: React.FC<MainPageProps> = ({
     setFinalOutput(combinedCode);
   };
 
-  // const runCode1 = useCallback(() => {
-  //   const combinedCode = `
-  //     <html>
-  //       <body>
-  //         ${html}
-  //         <script>
-  //           try {
-  //             ${javascript}
-  //           } catch (err) {
-  //             console.error("Iframe Error:", err);
-  //           }
-  //         </script>
-  //       </body>
-  //     </html>
-  //   `;
-  //   setFinalOutput(combinedCode);
-  // }, [html, javascript]);
-
   let dragging = useRef(false);
   let MaxHeight = 491;
   const [rowHeight, setRowHeight] = useState<number>(200);
@@ -258,19 +244,14 @@ const MainPage: React.FC<MainPageProps> = ({
     }
   }, [isOpen]);
 
-// ===================================strating changes=======================
+  // ===================================strating changes=======================
 
   return (
-
-
-
-
     <>
-
-{/* ========================================================== */}
-<div className="grid grid-cols-12 ">
-  <div className="col-span-12   bg-black">
-      <Header
+      {/* ========================================================== */}
+      <div className="grid grid-cols-12 ">
+        {/* <div className="col-span-12   bg-black">
+          <Header
             html={html}
             css={css}
             javascript={javascript}
@@ -283,79 +264,95 @@ const MainPage: React.FC<MainPageProps> = ({
             publicView={publicView}
             setPublicView={setPublicView}
           />
-</div>
-</div>
+        </div> */}
+      </div>
+
+      <div className="grid grid-cols-12 ">
 
 
-<div className="grid grid-cols-12 h-screen">
-
-
-{/* ====================================resizable content======================== */}
-<div className="col-span-12 p-0">
-
-
- <ResizablePanelGroup 
-orientation="vertical"
-        className="min-h-[400px] h-full w-full rounded-lg border" 
-      > 
-        <ResizablePanel defaultSize={100}> 
-          <div className="flex h-full items-center justify-center"> 
-            <div className="grid grid-cols-12 w-full h-full"> 
-              <div className="col-span-4 h-full"> 
-                <CodeEditor editValue={html} setEditValue={setHtml} language="html" /> 
-              </div> 
-              <div className="col-span-4 h-full"> 
-                <CodeEditor editValue={css} setEditValue={setCss} language="css" /> 
-              </div> 
-              <div className="col-span-4 h-full"> 
-                <CodeEditor editValue={javascript} setEditValue={setJavascript} language="javascript" /> 
-              </div> 
-            </div> 
-          </div> 
-        </ResizablePanel> 
-        <ResizableHandle /> 
-        <ResizablePanel defaultSize={75}> 
-          <div className="flex h-full"> 
-
-
- <div className="flex h-full items-center justify-center"> 
-            <div className="grid grid-cols-12 w-full h-full"> 
-            <div className="col-span-12">
-            {/* 
+<div className="col-span-12   bg-black">
+          <Header
+            html={html}
+            css={css}
+            javascript={javascript}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            fileName={fileName}
+            setFileName={setFileName}
+            role={role}
+            setRole={setRole}
+            publicView={publicView}
+            setPublicView={setPublicView}
+          />
+        </div>
+        
+        {/* ====================================resizable content======================== */}
+        <div className="col-span-12 p-0 h-screen">
+          <ResizablePanelGroup
+            orientation="vertical"
+            className="min-h-[400px] h-full w-full rounded-lg border"
+          >
+            <ResizablePanel defaultSize={100}>
+              <div className="flex h-full items-center justify-center">
+                <div className="grid grid-cols-12 w-full h-full">
+                  <div className="col-span-4 h-full">
+                    <CodeEditor
+                      editValue={html}
+                      setEditValue={setHtml}
+                      language="html"
+                    />
+                  </div>
+                  <div className="col-span-4 h-full">
+                    <CodeEditor
+                      editValue={css}
+                      setEditValue={setCss}
+                      language="css"
+                    />
+                  </div>
+                  <div className="col-span-4 h-full">
+                    <CodeEditor
+                      editValue={javascript}
+                      setEditValue={setJavascript}
+                      language="javascript"
+                    />
+                  </div>
+                </div>
+              </div>
+            </ResizablePanel>
+            <ResizableHandle />
+            <ResizablePanel defaultSize={75}>
+              <div className="flex h-full">
+                <div className="flex h-full w-full ">
+                  <div className="grid grid-cols-12 w-full h-full">
+                    <div className="col-span-12">
+                      {/* 
       <div
       className="editor-output"
       dangerouslySetInnerHTML={{ __html: html || "" }} /> */}
 
-            <button
-              className="text-white bg-[#5A5F73] my-2 box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
-              onClick={runCode}
-            >
-              Run Code
-            </button>
+                      <button
+                        className="text-white bg-[#5A5F73] my-2 box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
+                        onClick={runCode}
+                      >
+                        Run Code
+                      </button>
 
-            <iframe
-              key={finalOutput}
-              srcDoc={finalOutput}
-              title="output"
-              sandbox="allow-scripts allow-modals allow-same-origin"
-              width="100%"
-              height="300px"
-            />
-          </div>
-            </div> 
+                      <iframe
+                        key={finalOutput}
+                        srcDoc={finalOutput}
+                        title="output"
+                        sandbox="allow-scripts allow-modals allow-same-origin"
+                        width="100%"
+                        height="300px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ResizablePanel>
+          </ResizablePanelGroup>
 
-
-            
-          </div> 
-
-
-
-
-          </div> 
-        </ResizablePanel> 
-      </ResizablePanelGroup>
-
-   {/* <ResizablePanelGroup
+          {/* <ResizablePanelGroup
       orientation="vertical"
       className="min-h-[400px] w-full rounded-lg border"
     >
@@ -393,227 +390,210 @@ orientation="vertical"
         </div>
       </ResizablePanel>
     </ResizablePanelGroup> */}
-
-</div>
-
-{/* ====================================resizable content======================== */}
-
- <div className=" fixed bottom-0 w-full grid-cols-12  bg-black ">
-        <div className="col-span-12 bg-gray-700 flex justify-between">
-          <a
-            className="text-white font-semibold cursor-pointer"
-            onClick={() => {
-              setIsOpen(!isOpen);
-            }}
-          >
-            Console
-            {/* {errCount > 0 && ( */}
-            <span className="text-white mx-2 px-1 bg-red-500 rounded-2xl">
-              {errCount}
-            </span>
-            {/* )} */}
-          </a>
-
-          {isOpen && (
-            <button
-              className="bg-gray-500 text-white p-1 cursor-pointer"
-              onClick={() => {
-                setConsoleErrors([]);
-                setErrCount(0);
-                setJavascript(javascript);
-              }}
-            >
-              Clear
-            </button>
-          )}
         </div>
 
-        {isOpen && (
-          <div
-            className="col-span-12 py-5 text-white bg-black"
-            style={{ height: "100px", overflowY: "auto" }}
-          >
-            {/* <p>
+        {/* ====================================resizable content======================== */}
+
+        <div className=" fixed bottom-0 w-full grid-cols-12  bg-black ">
+          <div className="col-span-12 bg-gray-700 flex justify-between">
+            <a
+              className="text-white font-semibold cursor-pointer"
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+            >
+              Console
+              {/* {errCount > 0 && ( */}
+              <span className="text-white mx-2 px-1 bg-red-500 rounded-2xl">
+                {errCount}
+              </span>
+              {/* )} */}
+            </a>
+
+            {isOpen && (
+              <button
+                className="bg-gray-500 text-white p-1 cursor-pointer"
+                onClick={() => {
+                  setConsoleErrors([]);
+                  setErrCount(0);
+                  setJavascript(javascript);
+                }}
+              >
+                Clear
+              </button>
+            )}
+          </div>
+
+          {isOpen && (
+            <div
+              className="col-span-12 py-5 text-white bg-black"
+              style={{ height: "100px", overflowY: "auto" }}
+            >
+              {/* <p>
 
 {logs}
 </p> */}
-            {/* <br> */}
-            {consoleErrors}
+              {/* <br> */}
+              {consoleErrors}
 
-            {logs.map((log, index) => (
-              <div key={index}>{log}</div>
-            ))}
+              {logs.map((log, index) => (
+                <div key={index}>{log}</div>
+              ))}
 
-            <br />
-          </div>
-        )}
+              <br />
+            </div>
+          )}
+        </div>
       </div>
 
+      {/* ============================================================ */}
 
-</div>
+      <div className=" hidden relative flex flex-col min-h-screen">
+        {/* <style>{css}</style> */}
 
-
-
-
-
-
-{/* ============================================================ */}
-
-    <div className=" hidden relative flex flex-col min-h-screen">
-      {/* <style>{css}</style> */}
-
-      <div className="flex-none">
-        <div className="grid w-full grid-cols-12 gap-1 py-5 mx-auto  bg-black">
-          <Header
-            html={html}
-            css={css}
-            javascript={javascript}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            fileName={fileName}
-            setFileName={setFileName}
-            role={role}
-            setRole={setRole}
-            publicView={publicView}
-            setPublicView={setPublicView}
-          />
-        </div>
-
-        <div
-          className={`grid w-full grid-cols-12 gap-2  relative bg-black`}
-          // style={{height:"600px"}}
-          style={{
-            height: `${rowHeight}px`,
-            minHeight: "220px",
-            maxHeight: "491px",
-          }}
-        >
-
-
-
-
-          <div className="col-span-4 h-full">
-            <CodeEditor
-              editValue={html}
-              setEditValue={setHtml}
-              language="html"
-            />
-          </div>
-
-          <div className="col-span-4 h-full">
-            <CodeEditor editValue={css} setEditValue={setCss} language="css" />
-          </div>
-
-          <div className="col-span-4 h-full">
-            <CodeEditor
-              editValue={javascript}
-              setEditValue={setJavascript}
-              language="javascript"
+        <div className="flex-none">
+          <div className="grid w-full grid-cols-12 gap-1 py-5 mx-auto  bg-black">
+            <Header
+              html={html}
+              css={css}
+              javascript={javascript}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              fileName={fileName}
+              setFileName={setFileName}
+              role={role}
+              setRole={setRole}
+              publicView={publicView}
+              setPublicView={setPublicView}
             />
           </div>
 
           <div
-            className="col-span-12 absolute  bottom-0 left-0 w-full h-5 bg-gray-600 cursor-ns-resize hover:bg-sky-400 transition-colors"
-            // onClick={startResizing}
-            onMouseDown={startResizing}
-            // onMouseUp={startResizing}
-          ></div>
-        </div>
-      </div>
+            className={`grid w-full grid-cols-12 gap-2  relative bg-black`}
+            // style={{height:"600px"}}
+            style={{
+              height: `${rowHeight}px`,
+              minHeight: "220px",
+              maxHeight: "491px",
+            }}
+          >
+            <div className="col-span-4 h-full">
+              <CodeEditor
+                editValue={html}
+                setEditValue={setHtml}
+                language="html"
+              />
+            </div>
 
-      <div className="flex-grow">
-        <div className="grid w-full grid-cols-12 gap-1 py-5 mx-auto ">
-          <div className="col-span-12">
-            {/* 
+            <div className="col-span-4 h-full">
+              <CodeEditor
+                editValue={css}
+                setEditValue={setCss}
+                language="css"
+              />
+            </div>
+
+            <div className="col-span-4 h-full">
+              <CodeEditor
+                editValue={javascript}
+                setEditValue={setJavascript}
+                language="javascript"
+              />
+            </div>
+
+            <div
+              className="col-span-12 absolute  bottom-0 left-0 w-full h-5 bg-gray-600 cursor-ns-resize hover:bg-sky-400 transition-colors"
+              // onClick={startResizing}
+              onMouseDown={startResizing}
+              // onMouseUp={startResizing}
+            ></div>
+          </div>
+        </div>
+
+        <div className="flex-grow">
+          <div className="grid w-full grid-cols-12 gap-1 py-5 mx-auto ">
+            <div className="col-span-12">
+              {/* 
       <div
       className="editor-output"
       dangerouslySetInnerHTML={{ __html: html || "" }} /> */}
 
-            <button
-              className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
-              onClick={runCode}
-            >
-              Run Code
-            </button>
+              <button
+                className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
+                onClick={runCode}
+              >
+                Run Code
+              </button>
 
-            <iframe
-              key={finalOutput}
-              srcDoc={finalOutput}
-              title="output"
-              sandbox="allow-scripts allow-modals allow-same-origin"
-              width="100%"
-              height="300px"
-            />
+              <iframe
+                key={finalOutput}
+                srcDoc={finalOutput}
+                title="output"
+                sandbox="allow-scripts allow-modals allow-same-origin"
+                width="100%"
+                height="300px"
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* for console errors */}
+        {/* for console errors */}
 
-      <div className=" fixed bottom-0 w-full grid-cols-12  bg-black ">
-        <div className="col-span-12 bg-gray-700 flex justify-between">
-          <a
-            className="text-white font-semibold cursor-pointer"
-            onClick={() => {
-              setIsOpen(!isOpen);
-            }}
-          >
-            Console
-            {/* {errCount > 0 && ( */}
-            <span className="text-white mx-2 px-1 bg-red-500 rounded-2xl">
-              {errCount}
-            </span>
-            {/* )} */}
-          </a>
-
-          {isOpen && (
-            <button
-              className="bg-gray-500 text-white p-1 cursor-pointer"
+        <div className=" fixed bottom-0 w-full grid-cols-12  bg-black ">
+          <div className="col-span-12 bg-gray-700 flex justify-between">
+            <a
+              className="text-white font-semibold cursor-pointer"
               onClick={() => {
-                setConsoleErrors([]);
-                setErrCount(0);
-                setJavascript(javascript);
+                setIsOpen(!isOpen);
               }}
             >
-              Clear
-            </button>
-          )}
-        </div>
+              Console
+              {/* {errCount > 0 && ( */}
+              <span className="text-white mx-2 px-1 bg-red-500 rounded-2xl">
+                {errCount}
+              </span>
+              {/* )} */}
+            </a>
 
-        {isOpen && (
-          <div
-            className="col-span-12 py-5 text-white bg-black"
-            style={{ height: "100px", overflowY: "auto" }}
-          >
-            {/* <p>
+            {isOpen && (
+              <button
+                className="bg-gray-500 text-white p-1 cursor-pointer"
+                onClick={() => {
+                  setConsoleErrors([]);
+                  setErrCount(0);
+                  setJavascript(javascript);
+                }}
+              >
+                Clear
+              </button>
+            )}
+          </div>
+
+          {isOpen && (
+            <div
+              className="col-span-12 py-5 text-white bg-black"
+              style={{ height: "100px", overflowY: "auto" }}
+            >
+              {/* <p>
 
 {logs}
 </p> */}
-            {/* <br> */}
-            {consoleErrors}
+              {/* <br> */}
+              {consoleErrors}
 
-            {logs.map((log, index) => (
-              <div key={index}>{log}</div>
-            ))}
+              {logs.map((log, index) => (
+                <div key={index}>{log}</div>
+              ))}
 
-            <br />
-          </div>
-        )}
+              <br />
+            </div>
+          )}
+        </div>
+
+        {/* <script>{`${javascript}`}</script> */}
       </div>
-
-      {/* <script>{`${javascript}`}</script> */}
-    </div>
-
-    
     </>
   );
 };
 
 export default MainPage;
-
-
-
-
-
-
-

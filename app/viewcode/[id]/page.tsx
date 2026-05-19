@@ -11,10 +11,8 @@ const ViewCode: React.FC<ViewCodeProps> = async({params}) => {
   const {id}=await params
 
   return (
-    <>
     
       <MainPage id={id} />
-    </>
   );
 };
 
