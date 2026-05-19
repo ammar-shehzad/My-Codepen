@@ -18,7 +18,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ editValue, setEditValue, langua
 
 
 
-<div style={{ border: '1px solid #333', borderRadius: '4px',height:"70%"}}>
+<div style={{ border: '1px solid #333', borderRadius: '4px',height:"80%"}}>
   <div style={{
     padding: '10px 10px',
     background: '#1e1e1e', // Matches vs-dark
@@ -26,7 +26,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ editValue, setEditValue, langua
     fontSize: '12px',
     borderBottom: '1px solid #333'
   }}>
-    <span className="text-xl">
+    <span className="text-xl ">
     {language.toUpperCase()}
 
     </span>

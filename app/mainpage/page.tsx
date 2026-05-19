@@ -16,6 +16,8 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { SheetSide } from "@/components/bottom-console";
+
 
 // import CodeEditor from "./CodeEditor";
 // import Header from "./Header";
@@ -93,6 +95,7 @@ const MainPage: React.FC<MainPageProps> = ({
   }>();
 
   const [publicView, setPublicView] = useState<boolean>(false);
+  const[hasMounted,setHasMounted]=useState<boolean>(false)
   let orignalLogRef = useRef(console.log);
 
   let errCountRef = useRef(0);
@@ -149,12 +152,30 @@ const MainPage: React.FC<MainPageProps> = ({
   }, [javascript]);
 
   useEffect(() => {
+
+setHasMounted(true)
+
     let orignalConsoleError = console.error;
 
     console.error = (...args) => {
       // setErrCount((prev) => prev + 1);
 
-      setConsoleErrors(args.map((arg) => arg.toString()));
+      // setConsoleErrors(args.map((arg) => arg.toString()));
+
+
+
+      const consoleerrMessage =args
+      .map((a) => (typeof a === 'object' ? JSON.stringify(a) : String(a)))
+      .join(" "); 
+
+      setConsoleErrors((prev) => [...prev, consoleerrMessage]);
+
+
+
+  //      setConsoleErrors((prev) => [
+  //   ...prev,
+  //   args.map((arg) => (typeof arg === 'object' ? JSON.stringify(arg) : String(arg))).join(' ')
+  // ]);
 
       orignalConsoleError.apply(console, args);
     };
@@ -164,18 +185,33 @@ const MainPage: React.FC<MainPageProps> = ({
     };
   }, []);
 
+
+
+
+
   useEffect(() => {
+
+orignalLogRef.current = console.log; 
+
     console.log = (...args) => {
-      const consoleLogMessage = args.map((a) => String(a)).join(" ");
+      const consoleLogMessage =args
+      .map((a) => (typeof a === 'object' ? JSON.stringify(a) : String(a)))
+      .join(" "); 
+      
+      // args.map((a) => String(a)).join(" ");
 
       setLogs((prev) => [...prev, consoleLogMessage]);
+
       orignalLogRef.current.apply(console, args);
     };
 
     return () => {
       console.log = orignalLogRef.current;
     };
-  }, [isOpen]);
+
+
+
+  }, []);
 
   // ================================
 
@@ -245,27 +281,16 @@ const MainPage: React.FC<MainPageProps> = ({
   }, [isOpen]);
 
   // ===================================strating changes=======================
+if(!hasMounted) return null
+
+
+
+
 
   return (
     <>
       {/* ========================================================== */}
-      <div className="grid grid-cols-12 ">
-        {/* <div className="col-span-12   bg-black">
-          <Header
-            html={html}
-            css={css}
-            javascript={javascript}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            fileName={fileName}
-            setFileName={setFileName}
-            role={role}
-            setRole={setRole}
-            publicView={publicView}
-            setPublicView={setPublicView}
-          />
-        </div> */}
-      </div>
+
 
       <div className="grid grid-cols-12 ">
 
@@ -285,12 +310,17 @@ const MainPage: React.FC<MainPageProps> = ({
             setPublicView={setPublicView}
           />
         </div>
+
+
+
+
         
         {/* ====================================resizable content======================== */}
         <div className="col-span-12 p-0 h-screen">
+          
           <ResizablePanelGroup
             orientation="vertical"
-            className="min-h-[400px] h-full w-full rounded-lg border"
+            className=" h-full w-full rounded-lg border"
           >
             <ResizablePanel defaultSize={100}>
               <div className="flex h-full items-center justify-center">
@@ -346,69 +376,46 @@ const MainPage: React.FC<MainPageProps> = ({
                         height="300px"
                       />
                     </div>
+
+
+
+
                   </div>
                 </div>
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>
 
-          {/* <ResizablePanelGroup
-      orientation="vertical"
-      className="min-h-[400px] w-full rounded-lg border"
-    >
-      <ResizablePanel defaultSize="100%">
-        <div className="flex h-full items-center justify-center ">
-<div className="grid grid-cols-12 w-full">
-     <div className="col-span-4 h-full" style={{height:"100%"}}>
-            <CodeEditor
-              editValue={html}
-              setEditValue={setHtml}
-              language="html"
-            />
-          </div>
 
-          <div className="col-span-4 h-full "  style={{height:"100%"}}>
-            <CodeEditor editValue={css} setEditValue={setCss} language="css"  />
-          </div>
-
-          <div className="col-span-4 h-full" style={{height:"100%"}}>
-            <CodeEditor
-              editValue={javascript}
-              setEditValue={setJavascript}
-              language="javascript"
-            />
-          </div>
-
-</div>
-
-        </div>
-      </ResizablePanel>
-      <ResizableHandle />
-      <ResizablePanel defaultSize="75%">
-        <div className="flex h-full items-center justify-center p-6">
-          <span className="font-semibold">Content</span>
-        </div>
-      </ResizablePanel>
-    </ResizablePanelGroup> */}
         </div>
 
         {/* ====================================resizable content======================== */}
 
+
+  
+
+
         <div className=" fixed bottom-0 w-full grid-cols-12  bg-black ">
           <div className="col-span-12 bg-gray-700 flex justify-between">
-            <a
+            <div className="flex">
+           <SheetSide consoleErrors={consoleErrors} setConsoleErrors={setConsoleErrors} logs={logs} setLogs={setLogs} errCount={errCount} setErrCount={setErrCount} />
+ 
+            </div>
+
+           
+            {/* <a
               className="text-white font-semibold cursor-pointer"
               onClick={() => {
                 setIsOpen(!isOpen);
               }}
             >
               Console
-              {/* {errCount > 0 && ( */}
               <span className="text-white mx-2 px-1 bg-red-500 rounded-2xl">
                 {errCount}
               </span>
-              {/* )} */}
-            </a>
+              
+            </a> */}
+
 
             {isOpen && (
               <button
@@ -448,152 +455,12 @@ const MainPage: React.FC<MainPageProps> = ({
 
       {/* ============================================================ */}
 
-      <div className=" hidden relative flex flex-col min-h-screen">
-        {/* <style>{css}</style> */}
-
-        <div className="flex-none">
-          <div className="grid w-full grid-cols-12 gap-1 py-5 mx-auto  bg-black">
-            <Header
-              html={html}
-              css={css}
-              javascript={javascript}
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              fileName={fileName}
-              setFileName={setFileName}
-              role={role}
-              setRole={setRole}
-              publicView={publicView}
-              setPublicView={setPublicView}
-            />
-          </div>
-
-          <div
-            className={`grid w-full grid-cols-12 gap-2  relative bg-black`}
-            // style={{height:"600px"}}
-            style={{
-              height: `${rowHeight}px`,
-              minHeight: "220px",
-              maxHeight: "491px",
-            }}
-          >
-            <div className="col-span-4 h-full">
-              <CodeEditor
-                editValue={html}
-                setEditValue={setHtml}
-                language="html"
-              />
-            </div>
-
-            <div className="col-span-4 h-full">
-              <CodeEditor
-                editValue={css}
-                setEditValue={setCss}
-                language="css"
-              />
-            </div>
-
-            <div className="col-span-4 h-full">
-              <CodeEditor
-                editValue={javascript}
-                setEditValue={setJavascript}
-                language="javascript"
-              />
-            </div>
-
-            <div
-              className="col-span-12 absolute  bottom-0 left-0 w-full h-5 bg-gray-600 cursor-ns-resize hover:bg-sky-400 transition-colors"
-              // onClick={startResizing}
-              onMouseDown={startResizing}
-              // onMouseUp={startResizing}
-            ></div>
-          </div>
-        </div>
-
-        <div className="flex-grow">
-          <div className="grid w-full grid-cols-12 gap-1 py-5 mx-auto ">
-            <div className="col-span-12">
-              {/* 
-      <div
-      className="editor-output"
-      dangerouslySetInnerHTML={{ __html: html || "" }} /> */}
-
-              <button
-                className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
-                onClick={runCode}
-              >
-                Run Code
-              </button>
-
-              <iframe
-                key={finalOutput}
-                srcDoc={finalOutput}
-                title="output"
-                sandbox="allow-scripts allow-modals allow-same-origin"
-                width="100%"
-                height="300px"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* for console errors */}
-
-        <div className=" fixed bottom-0 w-full grid-cols-12  bg-black ">
-          <div className="col-span-12 bg-gray-700 flex justify-between">
-            <a
-              className="text-white font-semibold cursor-pointer"
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
-            >
-              Console
-              {/* {errCount > 0 && ( */}
-              <span className="text-white mx-2 px-1 bg-red-500 rounded-2xl">
-                {errCount}
-              </span>
-              {/* )} */}
-            </a>
-
-            {isOpen && (
-              <button
-                className="bg-gray-500 text-white p-1 cursor-pointer"
-                onClick={() => {
-                  setConsoleErrors([]);
-                  setErrCount(0);
-                  setJavascript(javascript);
-                }}
-              >
-                Clear
-              </button>
-            )}
-          </div>
-
-          {isOpen && (
-            <div
-              className="col-span-12 py-5 text-white bg-black"
-              style={{ height: "100px", overflowY: "auto" }}
-            >
-              {/* <p>
-
-{logs}
-</p> */}
-              {/* <br> */}
-              {consoleErrors}
-
-              {logs.map((log, index) => (
-                <div key={index}>{log}</div>
-              ))}
-
-              <br />
-            </div>
-          )}
-        </div>
-
-        {/* <script>{`${javascript}`}</script> */}
-      </div>
+ 
     </>
   );
+
+
+
 };
 
 export default MainPage;
