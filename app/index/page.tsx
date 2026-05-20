@@ -69,7 +69,7 @@ const [privateFile,setPrivateFile]=useState<{id:number;BookName:string;Html:stri
   const [isPublic,setIspublic]=useState<boolean>(true)
 const[requests,setRequests]=useState<RequestItem[]>([])
 const router=useRouter()
-  const [activeTab, setActiveTab] = useState(1);
+  const [activeTab, setActiveTab] = useState(2);
 
   const buttons = [
     { id: 1, label: "Create",link:"/mainpage" },
@@ -188,13 +188,15 @@ return(
       <AppSidebar />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-          <div className="flex w-full items-center gap-2 px-4">
+          <div className="flex w-full items-center gap-2 px-4 ">
             <SidebarTrigger className="-ml-1" />
             <Separator
               orientation="vertical"
               className="mr-2 data-vertical:h-4 data-vertical:self-auto"
             />
     
+<div className="flex w-full items-center justify-between px-4">
+
 <ul className="flex space-x-0.5">
   <li className="bg-[#1E1F26] w-20 h-10 py-1 rounded-l-sm text-center " style={{fontSize:"17px",lineHeight:"25px"}}>  <Link href="/mainpage">Pen </Link></li>
 
@@ -226,10 +228,13 @@ return(
 
 {/* <NavigationMenuDemo isPublic={isPublic} setIsPublic={setIspublic}/> */}
 <InputInline/>
+<div className="flex">
+
+
 <SheetDemo requests={requests} setRequests={setRequests} fetchRequests={fetchRequests}/>
 
 
-  <div className="flex-1" /> 
+  <div className="flex-1 mx-1" /> 
   
  <Popover>
       <PopoverTrigger asChild>
@@ -261,7 +266,9 @@ return(
       </PopoverContent>
     </Popover>
 
+</div>
 
+</div>
 
 
 {/* {
@@ -287,7 +294,7 @@ return(
           <div className="grid grid-cols-12   auto-rows-min gap-4 md:grid-cols-3 bg-[#131417]">
 
             <div className="col-span-12 py-4 ml-0 md:ml-3 lg:ml-3">
-       <div className="flex gap-2 p-4">
+       <div className="flex gap-2 p-4 space-x-3">
       {buttons.map((btn) => (
         <Link href={btn.link}
           key={btn.id}

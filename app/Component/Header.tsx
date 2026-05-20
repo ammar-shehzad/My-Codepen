@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 
 interface HeaderProps{
@@ -217,7 +218,7 @@ return(
 <>
 
 
-<div className="col-span-12 py-2 flex justify-between">
+<div className="col-span-12 pt-2 flex justify-between">
 
 <div >
 
@@ -253,14 +254,7 @@ setIsChangeName(false)
 
     
       
-      {/* <select
-        id="options"
-        className=" w-full rounded-md border border-gray-700 bg-gray-950 p-2.5 text-sm text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
-      >
-        <option value="1">Option One</option>
-        <option value="2">Option Two</option>
-        <option value="3">Option Three</option>
-      </select> */}
+     
     
 
 
@@ -280,8 +274,7 @@ setIsChangeName(false)
     </Select>
 
  :
-// {/* <p>{role}</p> */}
-// {/* <p className="text-white text-sm capitalize  w-2xs rounded-md border border-gray-700 bg-gray-950 p-2.5 text-sm text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">{role}</p> */}
+
 
   <Select value={role}  >
       <SelectTrigger className="w-full max-w-48 text-white">
@@ -304,27 +297,160 @@ setIsChangeName(false)
 
 
 
- {/* {!publicView ?
-    <select name="role" id="" value={role}  className=" w-2xs rounded-md border border-gray-700 bg-gray-950 p-2.5 text-sm text-white shadow-sm focus:border-blue-500 focus:ring-blue-500" onChange={(e)=>{setRole(e.target.value)}} >
-
-<option value="public">Public</option>
-<option value="private">Private</option>
-
-</select>:
-<p className="text-white text-sm capitalize  w-2xs rounded-md border border-gray-700 bg-gray-950 p-2.5 text-sm text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">{role}</p>
 
 
-    } */}
 
+<ul className="flex space-x-2">
+  <li className="bg-[#1E1F26] w-20 h-10 pt-2 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}> <Link href="#" onClick={handleView}> New Tab
+</Link> </li>
+
+
+
+
+
+
+
+   
+  
+
+
+
+
+
+
+     <li className="bg-[#1E1F26] w-20 h-10 pt-2 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}> 
+<Link
+href="#" 
+  // type="button" 
+  // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
+>
+{/* Add Wishlist */}
+<i className="fa-solid fa-heart" style={{color:' rgb(255, 255, 255)'}}></i>
+</Link>
+
+     </li>
+
+
+
+
+ {publicView && (
+   
+   <li className="bg-[#1E1F26] w-20 h-10 pt-2 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}> 
+
+reqStatus=='approved'?
+
+<Link href="#"  onClick={()=>handleFileEditByOtherUser(Number(localStorage.getItem("BookId")))}>
+
+Save Changes
+</Link>
+:
+
+reqStatus==""&&(
+
+<Link  href="#" onClick={handleRequestSubmit}>
+
+Edit Request
+</Link>
+)
+
+
+   </li>
+
+    )}
 
 
   
+
+
+ {!publicView && (
+ 
+  <li className="bg-[#1E1F26] w-20 h-10 pt-2 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
+
+
+<Link href="#" 
+  // type="button" 
+  // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
+  onClick={handleFileSubmit}
+>
+  <i className="fa-solid fa-cloud mx-0.5" style={{color:' rgb(255, 255, 255)'}}></i>
+
+  Save
+</Link>
+
+
+  </li>
+
+
+
+
+    )}
+
+
+
+
+
+ {!publicView && (
+ 
+  <li className="bg-[#1E1F26] w-25 h-10 pt-2 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
+
+<Link href="#">
+  <span className="mx-2"><i className="fa-solid fa-gear" style={{color:" rgb(254, 254, 254)"}}></i></span>
+  Settings
+</Link>
+
+
+  </li>
+
+
+
+
+    )}
+
+
+  <li className="bg-[#1E1F26] w-20 h-10 pt-2 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
+
+<Link href="#">
+
+<i className="fa-solid fa-eye" style={{color: "rgb(255, 255, 255)"}}></i>
+
+</Link>
+
+
+  </li>
+
+
+
+
+
+  <li className="bg-[#1E1F26] w-20 h-10 pt-2 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
+
+<Link href="#" >
+<i className="fa-regular fa-bookmark" style={{color: "rgb(255, 255, 255)"}}></i></Link>
+
+
+  </li>
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+{/* ===================================Old Buttons====================== */}
+
+
+{/*   
 <Button variant="secondary" onClick={handleView}>
 
 Open In New Tab
-</Button>
+</Button> */}
 
-
+{/* 
  {publicView && (
  
 reqStatus=='approved'?
@@ -343,7 +469,7 @@ Edit Request
 </Button>
 )
 
-    )}
+    )} */}
 
 
 
@@ -351,21 +477,16 @@ Edit Request
 
 
 
-
-<Button 
-  // type="button" 
-  // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
->
-{/* Add Wishlist */}
+{/* 
+<Button>
 <i className="fa-solid fa-heart" style={{color:' rgb(255, 255, 255)'}}></i>
-</Button>
+</Button> */}
 
-
+{/* 
  {!publicView && (
  
 <Button 
-  // type="button" 
-  // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
+  
   onClick={handleFileSubmit}
 >
   <i className="fa-solid fa-cloud mx-0.5" style={{color:' rgb(255, 255, 255)'}}></i>
@@ -373,51 +494,40 @@ Edit Request
   Save
 </Button>
 
-    )}
+    )} */}
 
 
-
+{/* 
  {!publicView && (
 
-<Button 
-  // type="button" 
-  // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
->
+<Button >
   <span className="mx-2"><i className="fa-solid fa-gear" style={{color:" rgb(254, 254, 254)"}}></i></span>
   Settings
 </Button>
 
     )}
+ */}
 
 
 
 
-
-
-<Button 
-  // type="button" 
-  // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
->
+{/* 
+<Button >
 
 <i className="fa-solid fa-eye" style={{color: "rgb(255, 255, 255)"}}></i>
 
-</Button>
+</Button> */}
 
 
 
+{/* 
+<Button >
+<i className="fa-regular fa-bookmark" style={{color: "rgb(255, 255, 255)"}}></i>
+</Button> */}
 
-<Button 
-  // type="button" 
-  // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
->
-<i className="fa-regular fa-bookmark" style={{color: "rgb(255, 255, 255)"}}></i></Button>
-
-{
+{/* {
 localStorage.getItem("userId")?
-<Button 
-  // type="button" 
-  // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
->
+<Button>
 
   <i className="fa-solid fa-user" style={{color: "rgb(255, 255, 255)"}}></i>
 </Button>
@@ -432,9 +542,9 @@ href="/login"
 Login</a>
 
 
-}
+} */}
 
-
+{/* ============================ */}
 
 
 </div>

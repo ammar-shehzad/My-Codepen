@@ -102,6 +102,15 @@ const MainPage: React.FC<MainPageProps> = ({
 
   const noteBookId = Number(id);
 
+const [hIcon, setHIcon] = useState<{class:string,style:string}>({class:"<>",style:"red"});
+
+
+const [cIcon, setCIcon] = useState<{class:string,style:string}>({class:"<Css>",style:"skyblue"});
+
+
+const [jIcon, setJIcon] = useState<{class:string,style:string}>({class:"JS",style:"yellow"});
+
+
   useEffect(() => {
     if (noteBookId) {
       const fetchNotebook = async () => {
@@ -135,21 +144,91 @@ const MainPage: React.FC<MainPageProps> = ({
     }
   }, [noteBookId]);
 
-  useEffect(() => {
-    setLogs([]);
-    setConsoleErrors([]);
-    // setErrCount([0])
+
+
+  
+//   useEffect(() => {
+//     setLogs([]);
+//     setConsoleErrors([]);
+//     try {
+
+//       if(javascript){
+//         new Function(javascript || "")();
+
+//       }
+//     } catch (err: any) {
+//       //  errCountRef.current +=1
+//       setErrCount((prev) => prev + 1);
+//       setConsoleErrors(err.message || "Unknown Error");
+//       setIsError(true);
+//       return
+//     }
+
+//     const combinedCode = `
+//       <html>
+//   <head>
+//   <style>
+//     ${css || ""} 
+//   </style>
+// </head>
+//         <body>
+//           ${html || ""}
+//           <script>
+//             try {
+//               ${javascript || ""}
+//             } catch (err) {
+//               console.error(err);
+//             }
+//           </script>
+
+//                   <span style="display:none">${Date.now()}</span>
+
+
+//         </body>
+//       </html>
+//     `;
+
+//     setFinalOutput(combinedCode);
+
+
+//   }, [html,css,javascript]);
+
+
+
+useEffect(() => {
+  setLogs([]);
+  setConsoleErrors([]);
+  setIsError(false);
+
+  const timeoutId = setTimeout(() => {
     try {
-      new Function(javascript || "")();
-      // alert("javascript working")
-    } catch (err: any) {
-      //  errCountRef.current +=1
+      if (javascript) {
+        new Function(javascript)();
+      }
+
+      const combinedCode = `
+        <html>
+          <head><style>${css || ""}</style></head>
+          <body>
+            ${html || ""}
+            <script>
+               ${javascript || ""}  
+            </script>
+          </body>
+        </html>
+      `;
+      setFinalOutput(combinedCode);
+      
+    } catch (err:any) {
       setErrCount((prev) => prev + 1);
-      setConsoleErrors(err.message || "Unknown Error");
-      // console.error("Error executing JS", err);
+      setConsoleErrors(err.message || "Syntax Error");
       setIsError(true);
     }
-  }, [javascript]);
+  }, 500); 
+
+  return () => clearTimeout(timeoutId);
+}, [html, css, javascript]);
+
 
   useEffect(() => {
 
@@ -215,33 +294,33 @@ orignalLogRef.current = console.log;
 
   // ================================
 
-  const runCode = (e: any) => {
-    const combinedCode = `
-      <html>
-  <head>
-  <style>
-    ${css} 
-  </style>
-</head>
-        <body>
-          ${html}
-          <script>
-            try {
-              ${javascript}
-            } catch (err) {
-              console.error(err);
-            }
-          </script>
+//   const runCode = (e: any) => {
+//     const combinedCode = `
+//       <html>
+//   <head>
+//   <style>
+//     ${css} 
+//   </style>
+// </head>
+//         <body>
+//           ${html}
+//           <script>
+//             try {
+//               ${javascript}
+//             } catch (err) {
+//               console.error(err);
+//             }
+//           </script>
 
-                  <span style="display:none">${Date.now()}</span>
+//                   <span style="display:none">${Date.now()}</span>
 
 
-        </body>
-      </html>
-    `;
+//         </body>
+//       </html>
+//     `;
 
-    setFinalOutput(combinedCode);
-  };
+//     setFinalOutput(combinedCode);
+//   };
 
   let dragging = useRef(false);
   let MaxHeight = 491;
@@ -329,6 +408,7 @@ if(!hasMounted) return null
                     <CodeEditor
                       editValue={html}
                       setEditValue={setHtml}
+                      icon={hIcon}
                       language="html"
                     />
                   </div>
@@ -336,6 +416,8 @@ if(!hasMounted) return null
                     <CodeEditor
                       editValue={css}
                       setEditValue={setCss}
+                      icon={cIcon}
+
                       language="css"
                     />
                   </div>
@@ -343,6 +425,8 @@ if(!hasMounted) return null
                     <CodeEditor
                       editValue={javascript}
                       setEditValue={setJavascript}
+                      icon={jIcon}
+
                       language="javascript"
                     />
                   </div>
@@ -360,12 +444,12 @@ if(!hasMounted) return null
       className="editor-output"
       dangerouslySetInnerHTML={{ __html: html || "" }} /> */}
 
-                      <button
+                      {/* <button
                         className="text-white bg-[#5A5F73] my-2 box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
                         onClick={runCode}
                       >
                         Run Code
-                      </button>
+                      </button> */}
 
                       <iframe
                         key={finalOutput}

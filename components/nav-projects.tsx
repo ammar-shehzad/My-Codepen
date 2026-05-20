@@ -62,7 +62,7 @@ export function NavProjects({
         </SidebarMenuItem>
 
         {projects.map((item) => (
-          <SidebarMenuItem key={item.name}>
+          <SidebarMenuItem key={item.name} className="space-y-3">
             <SidebarMenuButton asChild>
               <a href={item.url}>
                 {item.icon}
