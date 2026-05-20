@@ -108,7 +108,7 @@ const MainPage: React.FC<MainPageProps> = ({
         const { data, error } = await supabase
           .from("NoteBooks")
           .select("*")
-          .eq("id", noteBookId);
+          .eq("id", Number(noteBookId));
 
         if (error) {
           toast.error(error.message);

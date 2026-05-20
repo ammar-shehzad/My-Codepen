@@ -71,7 +71,7 @@ setTimeout(() => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Notifications</Button>
+        <Button variant="outline"><i className="fa-solid fa-bell" style={{color: "rgb(255, 212, 59)"}}></i></Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

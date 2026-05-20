@@ -64,6 +64,8 @@ export function NavigationMenuDemo({isPublic,setIsPublic}:navigationProps) {
     <NavigationMenu>
       <NavigationMenuList>
 
+
+
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
             <Link href="/mainpage">New Pen</Link>

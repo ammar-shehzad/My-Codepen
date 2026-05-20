@@ -8,6 +8,9 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
+import { Lato } from "next/font/google";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,8 +29,15 @@ export const metadata: Metadata = {
 
 const inter = Inter({
   subsets: ['latin'],
-  display: 'swap', // Recommended to prevent invisible text during load
+  display: 'swap'
 })
+
+const lato = Lato({
+  weight: ['400', '700'], 
+  subsets: ['latin'],
+  display: 'swap',
+});
+
 
 export default function RootLayout({
   children,
@@ -37,7 +47,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased ${inter.className}`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased 
+      ${lato.className}
+      `}
     >
       <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />

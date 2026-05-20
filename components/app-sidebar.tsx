@@ -183,12 +183,50 @@ const data = {
         />
       ),
     },
+
+  {
+      name: "Trending",
+      url: "#",
+      icon: (
+        <MapIcon
+        />
+      ),
+    },
+
+
+      {
+      name: "Challenges",
+      url: "#",
+      icon: (
+        <MapIcon
+        />
+      ),
+    },
+      {
+      name: "Spark",
+      url: "#",
+      icon: (
+        <MapIcon
+        />
+      ),
+    },
+         {
+      name: "Pricing",
+      url: "#",
+      icon: (
+        <MapIcon
+        />
+      ),
+    },
+
+
+
   ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon" {...props} className="w-50 bg-gray-500">
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>

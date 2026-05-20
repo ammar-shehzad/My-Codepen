@@ -31,6 +31,16 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { SheetDemo } from "@/components/notification-sheet"
 
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+
+
 interface HomeProps{
 
 
@@ -59,6 +69,17 @@ const [privateFile,setPrivateFile]=useState<{id:number;BookName:string;Html:stri
   const [isPublic,setIspublic]=useState<boolean>(true)
 const[requests,setRequests]=useState<RequestItem[]>([])
 const router=useRouter()
+  const [activeTab, setActiveTab] = useState(1);
+
+  const buttons = [
+    { id: 1, label: "Create",link:"/mainpage" },
+    { id: 2, label: "Pens" ,link:"#"},
+    { id: 3, label: "Collections" ,link:"#"},
+    { id: 4, label: "Deleted",link:"#" },
+  ];
+
+
+
 const fetchPublicData=async()=>{
   
   const { data, error } = await supabase
@@ -98,7 +119,7 @@ const fetchPrivateData=async()=>{
               .from("NoteBooks")
               .select("*")
               .eq("Role", "private")
-              .eq("User_Id",(localStorage.getItem("userId")));
+              .eq("User_Id",Number(localStorage.getItem("userId")));
               
             
 if(error){
@@ -128,7 +149,7 @@ const fetchRequests=async()=>{
 const { data, error } = await supabase
   .from('Requests')
   .select()
-  .eq('OwnerId',localStorage.getItem("userId"))
+  .eq('OwnerId',Number(localStorage.getItem("userId")))
 
 if(error){
   toast.error(error.message)
@@ -174,15 +195,50 @@ return(
               className="mr-2 data-vertical:h-4 data-vertical:self-auto"
             />
     
+<ul className="flex space-x-0.5">
+  <li className="bg-[#1E1F26] w-20 h-10 py-1 rounded-l-sm text-center " style={{fontSize:"17px",lineHeight:"25px"}}>  <Link href="/mainpage">Pen </Link></li>
 
-<NavigationMenuDemo isPublic={isPublic} setIsPublic={setIspublic}/>
+   <li className="bg-[#444857] w-20 h-10 py-1  text-center " style={{fontSize:"17px",lineHeight:"25px"}}> <Link href={"#"} onClick={()=>{
+              setIspublic(true)
+              }}>Public</Link></li>
+  
+
+
+{
+  localStorage.getItem("userId") && (
+
+ <li className="bg-[#1E1F26] w-30 h-10 py-1  text-center " style={{fontSize:"17px",lineHeight:"25px"}}>    <Link href={"#"} onClick={()=>{
+              setIspublic(false)
+              }}>Your Work</Link></li>
+
+  )
+}
+
+
+     <li className="bg-[#1E1F26] w-20 h-10 py-1  rounded-r-sm text-center " style={{fontSize:"17px",lineHeight:"25px"}}>  <Link href="/mainpage">Trending </Link></li>
+  
+
+
+</ul>
+
+
+
+
+{/* <NavigationMenuDemo isPublic={isPublic} setIsPublic={setIspublic}/> */}
+<InputInline/>
 <SheetDemo requests={requests} setRequests={setRequests} fetchRequests={fetchRequests}/>
 
-<InputInline/>
 
   <div className="flex-1" /> 
   
-
+ <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="outline" className="border-0"><i className="fa-solid fa-user" style={{color: "rgb(243, 245, 248)"}}></i></Button>
+      </PopoverTrigger>
+      <PopoverContent align="start">
+        <PopoverHeader>
+          <PopoverTitle>Profile</PopoverTitle>
+          <PopoverDescription>
 
 {
   localStorage.getItem("userId")?
@@ -200,11 +256,65 @@ return(
 }
 
 
+          </PopoverDescription>
+        </PopoverHeader>
+      </PopoverContent>
+    </Popover>
+
+
+
+
+{/* {
+  localStorage.getItem("userId")?
+<Button className="justify-end" onClick={()=>{
+  localStorage.clear()
+  setTimeout(() => {
+    router.push("/")
+  }, 2000);
+}
+}>Logout</Button>
+:
+<Button className="justify-end" > <Link href="/login"> LogIn</Link></Button>
+
+
+} */}
+
+
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+
+
+          <div className="grid grid-cols-12   auto-rows-min gap-4 md:grid-cols-3 bg-[#131417]">
+
+            <div className="col-span-12 py-4 ml-0 md:ml-3 lg:ml-3">
+       <div className="flex gap-2 p-4">
+      {buttons.map((btn) => (
+        <Link href={btn.link}
+          key={btn.id}
+          onClick={() => setActiveTab(btn.id)}
+          className={`${
+            activeTab === btn.id
+              ? "text-white  underline decoration-2 underline-offset-4" // Active styles
+              : "text-[#444857]" // Inactive styles
+          }`}
+style={{fontSize:"17px",fontWeight:"700",lineHeight:"25px"}}
+
+        >
+          {btn.label}
+        </Link>
+      ))}
+    </div>
+            </div>
+      
+</div>
+
+
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0 bg-[#131417]">
           
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+          <div className="grid auto-rows-min gap-4 md:grid-cols-3 ml-0 md:ml-3 lg:ml-3">
+
+    
+
 
 {
 
@@ -212,7 +322,7 @@ return(
 isPublic?
   publicFile.map((publicFiles)=>{
     return(
-      <div className="aspect-video rounded-xl bg-muted/50">
+      <div className="aspect-video rounded-xl bg-muted/50 ">
 {/* <BookCard myFile={publicFiles}/> */}
             <CardImage myFile={publicFiles}/>
 
