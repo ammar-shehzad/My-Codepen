@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/resizable";
 import { SheetSide } from "@/components/bottom-console";
 
-
 // import CodeEditor from "./CodeEditor";
 // import Header from "./Header";
 
@@ -95,21 +94,27 @@ const MainPage: React.FC<MainPageProps> = ({
   }>();
 
   const [publicView, setPublicView] = useState<boolean>(false);
-  const[hasMounted,setHasMounted]=useState<boolean>(false)
+  const [hasMounted, setHasMounted] = useState<boolean>(false);
   let orignalLogRef = useRef(console.log);
 
   let errCountRef = useRef(0);
 
   const noteBookId = Number(id);
 
-const [hIcon, setHIcon] = useState<{class:string,style:string}>({class:"/images/html.png",style:"red"});
+  const [hIcon, setHIcon] = useState<{ class: string; style: string }>({
+    class: "/images/html.png",
+    style: "red",
+  });
 
+  const [cIcon, setCIcon] = useState<{ class: string; style: string }>({
+    class: "/images/css.webp",
+    style: "skyblue",
+  });
 
-const [cIcon, setCIcon] = useState<{class:string,style:string}>({class:"/images/css.webp",style:"skyblue"});
-
-
-const [jIcon, setJIcon] = useState<{class:string,style:string}>({class:"/images/javascript.webp",style:"yellow"});
-
+  const [jIcon, setJIcon] = useState<{ class: string; style: string }>({
+    class: "/images/javascript.webp",
+    style: "yellow",
+  });
 
   useEffect(() => {
     if (noteBookId) {
@@ -144,69 +149,62 @@ const [jIcon, setJIcon] = useState<{class:string,style:string}>({class:"/images/
     }
   }, [noteBookId]);
 
+  //   useEffect(() => {
+  //     setLogs([]);
+  //     setConsoleErrors([]);
+  //     try {
 
+  //       if(javascript){
+  //         new Function(javascript || "")();
 
-  
-//   useEffect(() => {
-//     setLogs([]);
-//     setConsoleErrors([]);
-//     try {
+  //       }
+  //     } catch (err: any) {
+  //       //  errCountRef.current +=1
+  //       setErrCount((prev) => prev + 1);
+  //       setConsoleErrors(err.message || "Unknown Error");
+  //       setIsError(true);
+  //       return
+  //     }
 
-//       if(javascript){
-//         new Function(javascript || "")();
+  //     const combinedCode = `
+  //       <html>
+  //   <head>
+  //   <style>
+  //     ${css || ""}
+  //   </style>
+  // </head>
+  //         <body>
+  //           ${html || ""}
+  //           <script>
+  //             try {
+  //               ${javascript || ""}
+  //             } catch (err) {
+  //               console.error(err);
+  //             }
+  //           </script>
 
-//       }
-//     } catch (err: any) {
-//       //  errCountRef.current +=1
-//       setErrCount((prev) => prev + 1);
-//       setConsoleErrors(err.message || "Unknown Error");
-//       setIsError(true);
-//       return
-//     }
+  //                   <span style="display:none">${Date.now()}</span>
 
-//     const combinedCode = `
-//       <html>
-//   <head>
-//   <style>
-//     ${css || ""} 
-//   </style>
-// </head>
-//         <body>
-//           ${html || ""}
-//           <script>
-//             try {
-//               ${javascript || ""}
-//             } catch (err) {
-//               console.error(err);
-//             }
-//           </script>
+  //         </body>
+  //       </html>
+  //     `;
 
-//                   <span style="display:none">${Date.now()}</span>
+  //     setFinalOutput(combinedCode);
 
+  //   }, [html,css,javascript]);
 
-//         </body>
-//       </html>
-//     `;
+  useEffect(() => {
+    setLogs([]);
+    setConsoleErrors([]);
+    setIsError(false);
 
-//     setFinalOutput(combinedCode);
+    const timeoutId = setTimeout(() => {
+      try {
+        if (javascript) {
+          new Function(javascript)();
+        }
 
-
-//   }, [html,css,javascript]);
-
-
-
-useEffect(() => {
-  setLogs([]);
-  setConsoleErrors([]);
-  setIsError(false);
-
-  const timeoutId = setTimeout(() => {
-    try {
-      if (javascript) {
-        new Function(javascript)();
-      }
-
-      const combinedCode = `
+        const combinedCode = `
         <html>
           <head><style>${css || ""}</style></head>
           <body>
@@ -217,22 +215,19 @@ useEffect(() => {
           </body>
         </html>
       `;
-      setFinalOutput(combinedCode);
-      
-    } catch (err:any) {
-      setErrCount((prev) => prev + 1);
-      setConsoleErrors(err.message || "Syntax Error");
-      setIsError(true);
-    }
-  }, 500); 
+        setFinalOutput(combinedCode);
+      } catch (err: any) {
+        setErrCount((prev) => prev + 1);
+        setConsoleErrors(err.message || "Syntax Error");
+        setIsError(true);
+      }
+    }, 500);
 
-  return () => clearTimeout(timeoutId);
-}, [html, css, javascript]);
-
+    return () => clearTimeout(timeoutId);
+  }, [html, css, javascript]);
 
   useEffect(() => {
-
-setHasMounted(true)
+    setHasMounted(true);
 
     let orignalConsoleError = console.error;
 
@@ -241,20 +236,16 @@ setHasMounted(true)
 
       // setConsoleErrors(args.map((arg) => arg.toString()));
 
-
-
-      const consoleerrMessage =args
-      .map((a) => (typeof a === 'object' ? JSON.stringify(a) : String(a)))
-      .join(" "); 
+      const consoleerrMessage = args
+        .map((a) => (typeof a === "object" ? JSON.stringify(a) : String(a)))
+        .join(" ");
 
       setConsoleErrors((prev) => [...prev, consoleerrMessage]);
 
-
-
-  //      setConsoleErrors((prev) => [
-  //   ...prev,
-  //   args.map((arg) => (typeof arg === 'object' ? JSON.stringify(arg) : String(arg))).join(' ')
-  // ]);
+      //      setConsoleErrors((prev) => [
+      //   ...prev,
+      //   args.map((arg) => (typeof arg === 'object' ? JSON.stringify(arg) : String(arg))).join(' ')
+      // ]);
 
       orignalConsoleError.apply(console, args);
     };
@@ -264,19 +255,14 @@ setHasMounted(true)
     };
   }, []);
 
-
-
-
-
   useEffect(() => {
-
-orignalLogRef.current = console.log; 
+    orignalLogRef.current = console.log;
 
     console.log = (...args) => {
-      const consoleLogMessage =args
-      .map((a) => (typeof a === 'object' ? JSON.stringify(a) : String(a)))
-      .join(" "); 
-      
+      const consoleLogMessage = args
+        .map((a) => (typeof a === "object" ? JSON.stringify(a) : String(a)))
+        .join(" ");
+
       // args.map((a) => String(a)).join(" ");
 
       setLogs((prev) => [...prev, consoleLogMessage]);
@@ -287,40 +273,36 @@ orignalLogRef.current = console.log;
     return () => {
       console.log = orignalLogRef.current;
     };
-
-
-
   }, []);
 
   // ================================
 
-//   const runCode = (e: any) => {
-//     const combinedCode = `
-//       <html>
-//   <head>
-//   <style>
-//     ${css} 
-//   </style>
-// </head>
-//         <body>
-//           ${html}
-//           <script>
-//             try {
-//               ${javascript}
-//             } catch (err) {
-//               console.error(err);
-//             }
-//           </script>
+  //   const runCode = (e: any) => {
+  //     const combinedCode = `
+  //       <html>
+  //   <head>
+  //   <style>
+  //     ${css}
+  //   </style>
+  // </head>
+  //         <body>
+  //           ${html}
+  //           <script>
+  //             try {
+  //               ${javascript}
+  //             } catch (err) {
+  //               console.error(err);
+  //             }
+  //           </script>
 
-//                   <span style="display:none">${Date.now()}</span>
+  //                   <span style="display:none">${Date.now()}</span>
 
+  //         </body>
+  //       </html>
+  //     `;
 
-//         </body>
-//       </html>
-//     `;
-
-//     setFinalOutput(combinedCode);
-//   };
+  //     setFinalOutput(combinedCode);
+  //   };
 
   let dragging = useRef(false);
   let MaxHeight = 491;
@@ -360,21 +342,14 @@ orignalLogRef.current = console.log;
   }, [isOpen]);
 
   // ===================================strating changes=======================
-if(!hasMounted) return null
-
-
-
-
+  if (!hasMounted) return null;
 
   return (
-    <>
+    <div className="overflow-y-auto">
       {/* ========================================================== */}
 
-
       <div className="grid grid-cols-12 ">
-
-
-<div className="col-span-12   bg-black">
+        <div className="col-span-12   bg-black">
           <Header
             html={html}
             css={css}
@@ -390,13 +365,8 @@ if(!hasMounted) return null
           />
         </div>
 
-
-
-
-        
         {/* ====================================resizable content======================== */}
         <div className="col-span-12 p-0 h-screen">
-          
           <ResizablePanelGroup
             orientation="vertical"
             className=" h-full w-full rounded-lg border"
@@ -417,7 +387,6 @@ if(!hasMounted) return null
                       editValue={css}
                       setEditValue={setCss}
                       icon={cIcon}
-
                       language="css"
                     />
                   </div>
@@ -426,7 +395,6 @@ if(!hasMounted) return null
                       editValue={javascript}
                       setEditValue={setJavascript}
                       icon={jIcon}
-
                       language="javascript"
                     />
                   </div>
@@ -460,33 +428,28 @@ if(!hasMounted) return null
                         height="300px"
                       />
                     </div>
-
-
-
-
                   </div>
                 </div>
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>
-
-
         </div>
 
         {/* ====================================resizable content======================== */}
 
-
-  
-
-
         <div className=" fixed bottom-0 w-full grid-cols-12  bg-black ">
           <div className="col-span-12 bg-gray-700 flex justify-between">
             <div className="flex">
-           <SheetSide consoleErrors={consoleErrors} setConsoleErrors={setConsoleErrors} logs={logs} setLogs={setLogs} errCount={errCount} setErrCount={setErrCount} />
- 
+              <SheetSide
+                consoleErrors={consoleErrors}
+                setConsoleErrors={setConsoleErrors}
+                logs={logs}
+                setLogs={setLogs}
+                errCount={errCount}
+                setErrCount={setErrCount}
+              />
             </div>
 
-           
             {/* <a
               className="text-white font-semibold cursor-pointer"
               onClick={() => {
@@ -499,7 +462,6 @@ if(!hasMounted) return null
               </span>
               
             </a> */}
-
 
             {isOpen && (
               <button
@@ -538,13 +500,8 @@ if(!hasMounted) return null
       </div>
 
       {/* ============================================================ */}
-
- 
-    </>
+    </div>
   );
-
-
-
 };
 
 export default MainPage;

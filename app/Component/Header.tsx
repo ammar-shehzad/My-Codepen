@@ -300,7 +300,7 @@ setIsChangeName(false)
 
 
 
-<ul className="flex space-x-2">
+<ul className="flex space-x-2 mr-2">
   <li className="bg-[#1E1F26] w-20 h-10 py-3 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}> <Link href="#" onClick={handleView}> New Tab
 </Link> </li>
 

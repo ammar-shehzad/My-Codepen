@@ -9,8 +9,7 @@ import {
   useState,
 } from "react";
 
-import "../globals.css"
-
+import "../globals.css";
 
 interface FullTabViewProps {
   html: string | undefined;
@@ -33,16 +32,9 @@ const FullTabView: React.FC<FullTabViewProps> = ({
   consoleErrors,
   setConsoleErrors,
 }) => {
-
-
   return (
     <>
       <style>
-
-
-
-
-
         {/* {css} */}
         {localStorage.getItem("css")}
       </style>

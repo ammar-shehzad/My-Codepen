@@ -136,7 +136,7 @@ const IndexPage: React.FC<HomeProps> = () => {
       .from("Requests")
       .select()
       .eq("OwnerId", Number(localStorage.getItem("userId")))
-      .eq("status","pending");
+      .eq("status", "pending");
 
     if (error) {
       toast.error(error.message);
@@ -149,10 +149,9 @@ const IndexPage: React.FC<HomeProps> = () => {
     }
   };
 
-
   // to fetch realtime data from database
   useEffect(() => {
- fetchPrivateData();
+    fetchPrivateData();
     fetchPublicData();
     fetchRequests();
     const channel = supabase
@@ -164,9 +163,9 @@ const IndexPage: React.FC<HomeProps> = () => {
           console.log("Change received!", payload);
 
           // 3. Update state based on payload type
-           fetchPrivateData();
-    fetchPublicData();
-    fetchRequests(); // Simplest way: re-fetch data
+          fetchPrivateData();
+          fetchPublicData();
+          fetchRequests(); // Simplest way: re-fetch data
         },
       )
       .on(
@@ -175,9 +174,10 @@ const IndexPage: React.FC<HomeProps> = () => {
         (payload) => {
           console.log("Change received for cards!", payload);
 
- fetchPrivateData();
-    fetchPublicData();
-    fetchRequests();        },
+          fetchPrivateData();
+          fetchPublicData();
+          fetchRequests();
+        },
       )
       .on(
         "postgres_changes",
@@ -185,9 +185,10 @@ const IndexPage: React.FC<HomeProps> = () => {
         (payload) => {
           console.log("Change received for User LogOut!", payload);
 
- fetchPrivateData();
-    fetchPublicData();
-    fetchRequests();        },
+          fetchPrivateData();
+          fetchPublicData();
+          fetchRequests();
+        },
       )
       .subscribe();
 
@@ -195,8 +196,6 @@ const IndexPage: React.FC<HomeProps> = () => {
       supabase.removeChannel(channel);
     };
   }, []);
-
-
 
   // useEffect(() => {
   //   fetchPrivateData();
@@ -446,8 +445,8 @@ const IndexPage: React.FC<HomeProps> = () => {
           </div>
 
           <div className="grid grid-cols-12   auto-rows-min gap-4 md:grid-cols-3 bg-[#131417]">
-            <div className="col-span-12 py-4 ml-0 md:ml-3 lg:ml-3">
-              <div className="flex gap-2 p-4 space-x-3">
+            <div className="col-span-12 py-1 ml-0 md:ml-3 lg:ml-3">
+              <div className="flex gap-2 p-2 space-x-3">
                 <div></div>
               </div>
             </div>
@@ -455,23 +454,33 @@ const IndexPage: React.FC<HomeProps> = () => {
 
           <div className="flex flex-1 flex-col gap-4 p-4 pt-0 bg-[#131417]">
             <div className="grid auto-rows-min gap-4 md:grid-cols-3 ml-0 md:ml-3 lg:ml-3">
-              {isPublic
-                ? publicFile.map((publicFiles) => {
-                    return (
-                      <div className="aspect-video rounded-xl bg-muted/50 ">
-                        {/* <BookCard myFile={publicFiles}/> */}
-                        <CardImage myFile={publicFiles} />
-                      </div>
-                    );
-                  })
-                : privateFile.map((privateFiles) => {
-                    return (
-                      <div className="aspect-video rounded-xl bg-muted/50">
-                        {/* <BookCard myFile={publicFiles}/> */}
-                        <CardImage myFile={privateFiles} />
-                      </div>
-                    );
-                  })}
+              {isPublic ? (
+                publicFile.map((publicFiles) => {
+                  return (
+                    <div className="aspect-video rounded-xl bg-muted/50 ">
+                      {/* <BookCard myFile={publicFiles}/> */}
+                      <CardImage myFile={publicFiles} />
+                    </div>
+                  );
+                })
+              ) : privateFile.length > 0 ? (
+                privateFile.map((privateFiles) => {
+                  return (
+                    <div className="aspect-video rounded-xl bg-muted/50">
+                      {/* <BookCard myFile={publicFiles}/> */}
+                      <CardImage myFile={privateFiles} />
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="w-full ">
+                  <h5>No Files Found</h5>
+                  {/* <div className="flex justify-center w-full">
+                  <img src="/images/nofile.png" alt="" className="w-25 h-auto my-auto" />
+
+                  </div> */}
+                </div>
+              )}
 
               {/* <div className="aspect-video rounded-xl bg-muted/50" />
             <div className="aspect-video rounded-xl bg-muted/50" /> */}
