@@ -33,9 +33,12 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ editValue, setEditValue, langua
     fontSize: '12px',
     borderBottom: '1px solid #333'
   }}>
-<div className="bg-[#444857] w-fit h-10 py-2 px-2 rounded-l-sm text-center " style={{fontSize:"17px",lineHeight:"25px"}}>   
-   <span className="text-xl flex ">
-<h6 className=""  style={{color:icon.style }}>{icon.class}</h6>
+<div className="bg-[#444857] w-fit h-10 py-2 px-2 rounded-r-sm text-center " style={{fontSize:"17px",lineHeight:"25px"}}>   
+   <span className="text-xl flex items-center ">
+
+<img src={`${icon.class}`} alt="" className="w-5 h-5 mr-1" />
+
+{/* <h6 className=""  style={{color:icon.style }}>{icon.class}</h6> */}
     {language.toUpperCase()}
     </span>
     </div>

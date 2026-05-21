@@ -71,7 +71,7 @@ const MainPage: React.FC<MainPageProps> = ({
   // ===================================
 
   const [html, setHtml] = useState<string | undefined>("");
-  const [css, setCss] = useState<string | undefined>("/* Enter Css Here */");
+  const [css, setCss] = useState<string | undefined>("");
 
   const [javascript, setJavascript] = useState<string | undefined>("");
   const [consoleErrors, setConsoleErrors] = useState<string[]>([]);
@@ -102,13 +102,13 @@ const MainPage: React.FC<MainPageProps> = ({
 
   const noteBookId = Number(id);
 
-const [hIcon, setHIcon] = useState<{class:string,style:string}>({class:"<>",style:"red"});
+const [hIcon, setHIcon] = useState<{class:string,style:string}>({class:"/images/html.png",style:"red"});
 
 
-const [cIcon, setCIcon] = useState<{class:string,style:string}>({class:"<Css>",style:"skyblue"});
+const [cIcon, setCIcon] = useState<{class:string,style:string}>({class:"/images/css.webp",style:"skyblue"});
 
 
-const [jIcon, setJIcon] = useState<{class:string,style:string}>({class:"JS",style:"yellow"});
+const [jIcon, setJIcon] = useState<{class:string,style:string}>({class:"/images/javascript.webp",style:"yellow"});
 
 
   useEffect(() => {

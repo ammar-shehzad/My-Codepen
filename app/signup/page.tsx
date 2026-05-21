@@ -16,6 +16,8 @@ const Signup: React.FC<SignupProps> = () => {
   }>({ userName: "", userEmail: "", userPassword: "" });
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const nameRegex = /[a-zA-Z]{2,24}/;
+    const passwordRegex = /^.{8,}$/;
+
 const  route=useRouter()
 
 
@@ -41,7 +43,9 @@ const  route=useRouter()
       }
       else if (!nameRegex.test(user.userName)) {
         toast.error("Please Enter a Valid Name");
-      } else {
+      }   else if (!passwordRegex.test(user.userPassword)) {
+        toast.error("Minimum 8 Character Password Required");
+      }else {
         // for checking that user already  exist or not
 
         const { data, error } = await supabase
@@ -101,11 +105,10 @@ const  route=useRouter()
             className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
           >
             <img
-              className="w-8 h-8 mr-2"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
+              className="w-50 h-auto mr-2"
+              src="/images/logo.png"
               alt="logo"
             />
-            Flowbite
           </a>
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">

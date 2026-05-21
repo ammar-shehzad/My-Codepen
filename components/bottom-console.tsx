@@ -31,7 +31,8 @@ export function SheetSide({consoleErrors,setConsoleErrors,logs,setLogs,errCount,
         <Sheet key={side}>
           <SheetTrigger asChild>
             <Button  className="capitalize">
-              {side}
+              {/* {side} */}
+              Console
               <span style={{color:"red",fontWeight:"bold"}}>
               {errCount }
 

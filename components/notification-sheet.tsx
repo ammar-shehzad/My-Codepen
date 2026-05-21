@@ -68,6 +68,30 @@ setTimeout(() => {
 }
 
 
+
+const editRequestStatusToCancel=async(reqId:number)=>{
+
+const { error } = await supabase
+  .from('Requests')
+  .update({ status: 'cancel' })
+  .eq('id', reqId)
+
+if(error){
+  toast.error(error.message)
+}else{
+toast.success("Request Accepted")
+setTimeout(() => {
+  fetchRequests()
+}, 2000);
+}
+
+
+
+}
+
+
+
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -95,15 +119,15 @@ setTimeout(() => {
   return (
     <div key={r.id}>
 
-    <div   className="h-[50px] p-1 flex rounded-xl bg-muted/50" key={r.id || r.userName}>
+    <div   className="relative h-[100px] p-5  rounded-xl bg-muted/50" key={r.id || r.userName}>
       <p>You Have Received a Request By {String(r.userName)} to edit file " {r.fileName} "</p>
 
 {
 r.status!='approved' &&(
-  <>
+  <div className="absolute bottom-2 left-2 right-2 flex justify-end gap-2">
       <Button onClick={()=>editRequestStatus(r.id)}>Accept</Button>
-      <Button variant="destructive">Delete</Button>
-  </>
+      <Button variant="destructive" onClick={()=>editRequestStatusToCancel(r.id)}>Cancel</Button>
+  </div>
 )
 }
 

@@ -170,10 +170,8 @@ const data = {
         {
       name: "Bookmarks",
       url: "#",
-      icon: (
-        <MapIcon
-        />
-      ),
+      icon:<i className="fa-solid fa-bookmark" style={{color: "rgb(255, 255, 255)"}}></i>        
+      
     },
         {
       name: "Following",
@@ -187,36 +185,24 @@ const data = {
   {
       name: "Trending",
       url: "#",
-      icon: (
-        <MapIcon
-        />
-      ),
+      icon: <i className="fa-solid fa-arrow-trend-up" style={{color:" rgb(255, 255, 255)"}}></i>
     },
 
 
       {
       name: "Challenges",
       url: "#",
-      icon: (
-        <MapIcon
-        />
-      ),
+      icon:<i className="fa-brands fa-hackerrank" style={{color: "rgb(255, 255, 255)"}}></i>
     },
       {
       name: "Spark",
       url: "#",
-      icon: (
-        <MapIcon
-        />
-      ),
+      icon: <i className="fa-solid fa-cloud-bolt" style={{color: "rgb(255, 255, 255)"}}></i>
     },
          {
       name: "Pricing",
       url: "#",
-      icon: (
-        <MapIcon
-        />
-      ),
+      icon:<i className="fa-solid fa-dollar-sign" style={{color:" rgb(255, 255, 255)"}}></i>
     },
 
 

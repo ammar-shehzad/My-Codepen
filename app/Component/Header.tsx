@@ -59,7 +59,7 @@ if(html!=""){
 const { data, error } = await supabase
   .from('NoteBooks')
   .select('*')
-  .eq('User_Id',localStorage.getItem("userId"))
+  .eq('User_Id',Number(localStorage.getItem("userId")))
 
 if(error){
   toast.error(error.message)
@@ -70,10 +70,10 @@ if(error){
   
  
  if(data.length>0){
- if(data[0].BookName==fileName){
-    toast.error("File Already Exist With This Name")
-    return
-  }
+//  if(data[0].BookName==fileName){
+//     toast.error("File Already Exist With This Name")
+//     return
+//   }
  }
 
 
@@ -152,8 +152,8 @@ const fetchReqstatus=async()=>{
 const { data, error } = await supabase
   .from('Requests')
   .select()
-  .eq('userId',localStorage.getItem("userId"))
-  .eq('bookId',localStorage.getItem("BookId"))
+  .eq('userId',Number(localStorage.getItem("userId")))
+  .eq('bookId',Number(localStorage.getItem("BookId")))
 
 if(error){
   toast.error(error.message)
@@ -301,7 +301,7 @@ setIsChangeName(false)
 
 
 <ul className="flex space-x-2">
-  <li className="bg-[#1E1F26] w-20 h-10 pt-2 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}> <Link href="#" onClick={handleView}> New Tab
+  <li className="bg-[#1E1F26] w-20 h-10 py-3 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}> <Link href="#" onClick={handleView}> New Tab
 </Link> </li>
 
 
@@ -318,7 +318,7 @@ setIsChangeName(false)
 
 
 
-     <li className="bg-[#1E1F26] w-20 h-10 pt-2 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}> 
+     <li className="bg-[#1E1F26] w-20 h-10 py-3 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}> 
 <Link
 href="#" 
   // type="button" 
@@ -335,8 +335,8 @@ href="#"
 
  {publicView && (
    
-   <li className="bg-[#1E1F26] w-20 h-10 pt-2 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}> 
-
+   <li className="bg-[#1E1F26] w-30 h-10 py-3 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}> 
+{
 reqStatus=='approved'?
 
 <Link href="#"  onClick={()=>handleFileEditByOtherUser(Number(localStorage.getItem("BookId")))}>
@@ -351,8 +351,11 @@ reqStatus==""&&(
 
 Edit Request
 </Link>
+
+
 )
 
+}
 
    </li>
 
@@ -364,7 +367,10 @@ Edit Request
 
  {!publicView && (
  
-  <li className="bg-[#1E1F26] w-20 h-10 pt-2 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
+ localStorage.getItem("userId")?
+
+ 
+  <li className="bg-[#1E1F26] w-20 h-10 py-3 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
 
 
 <Link href="#" 
@@ -380,7 +386,21 @@ Edit Request
 
   </li>
 
+:
 
+ <li className="bg-[#1E1F26] w-20 h-10 py-3 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
+
+
+<Link href="/login" 
+
+>
+  <i className="fa-solid fa-cloud mx-0.5" style={{color:' rgb(255, 255, 255)'}}></i>
+
+  Save
+</Link>
+
+
+  </li>
 
 
     )}
@@ -391,7 +411,7 @@ Edit Request
 
  {!publicView && (
  
-  <li className="bg-[#1E1F26] w-25 h-10 pt-2 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
+  <li className="bg-[#1E1F26] w-25 h-10 py-3 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
 
 <Link href="#">
   <span className="mx-2"><i className="fa-solid fa-gear" style={{color:" rgb(254, 254, 254)"}}></i></span>
@@ -407,7 +427,7 @@ Edit Request
     )}
 
 
-  <li className="bg-[#1E1F26] w-20 h-10 pt-2 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
+  <li className="bg-[#1E1F26] w-20 h-10 py-3 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
 
 <Link href="#">
 
@@ -422,7 +442,7 @@ Edit Request
 
 
 
-  <li className="bg-[#1E1F26] w-20 h-10 pt-2 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
+  <li className="bg-[#1E1F26] w-20 h-10 py-3 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
 
 <Link href="#" >
 <i className="fa-regular fa-bookmark" style={{color: "rgb(255, 255, 255)"}}></i></Link>
