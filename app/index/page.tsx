@@ -307,7 +307,7 @@ const IndexPage: React.FC<HomeProps> = () => {
                             <Button
                               className="justify-end"
                               onClick={() => {
-                                localStorage.clear();
+                                // localStorage.clear();
                                 setTimeout(() => {
                                   router.push("/");
                                 }, 2000);
