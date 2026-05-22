@@ -310,27 +310,25 @@ const MainPage: React.FC<MainPageProps> = ({
   // const [isOpen, setIsOpen] = useState(false);
   const [consoleErr2, setConsoleErr2] = useState<any>();
 
-  const startResizing = useCallback(() => {
-    dragging.current = true;
+  // const startResizing = useCallback(() => {
+  //   dragging.current = true;
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", stopResizing);
-  }, []);
+  
 
-  const stopResizing = useCallback(() => {
-    dragging.current = false;
-    window.removeEventListener("mousemove", handleMouseMove);
-    window.removeEventListener("mouseup", stopResizing);
-  }, []);
+  // const stopResizing = useCallback(() => {
+  //   dragging.current = false;
+  //   window.removeEventListener("mousemove", handleMouseMove);
+  //   window.removeEventListener("mouseup", stopResizing);
+  // }, []);
 
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (dragging.current) {
-      setRowHeight((prev) => {
-        const NextHeight = prev + e.movementY;
-        return Math.min(Math.max(NextHeight, 0), MaxHeight);
-      });
-    }
-  }, []);
+  // const handleMouseMove = useCallback((e: MouseEvent) => {
+  //   if (dragging.current) {
+  //     setRowHeight((prev) => {
+  //       const NextHeight = prev + e.movementY;
+  //       return Math.min(Math.max(NextHeight, 0), MaxHeight);
+  //     });
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (isOpen) {

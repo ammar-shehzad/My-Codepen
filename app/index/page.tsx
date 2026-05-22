@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import BookCard from "../Component/BooksCard";
 import HomeNavbar from "../Component/HomeNavbar";
@@ -49,6 +50,9 @@ import {
   PopoverTitle,
   PopoverTrigger,
 } from "@/components/ui/popover";
+
+export const dynamic = 'force-dynamic'; 
+
 
 interface HomeProps {}
 
