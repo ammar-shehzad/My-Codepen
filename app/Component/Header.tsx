@@ -45,7 +45,7 @@ localStorage.setItem("css",css??"")
 localStorage.setItem("javascript",javascript??"")
 
 
-window.open('/FullTabView','_blank')
+window.open('/fulltabview','_blank')
 
 }
 
