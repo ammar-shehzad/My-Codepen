@@ -156,6 +156,7 @@ const IndexPage: React.FC<HomeProps> = () => {
     }
   };
 
+  // ====
   // ==================Doing Changes======================
 
   // to fetch realtime data from database
