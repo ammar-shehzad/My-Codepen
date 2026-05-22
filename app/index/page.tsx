@@ -92,7 +92,7 @@ const IndexPage: React.FC<HomeProps> = () => {
   const [requests, setRequests] = useState<RequestItem[]>([]);
   const router = useRouter();
   const [activeTab, setActiveTab] = useState(2);
-
+  const [storedUserId, setStoredUserId] = useState<any>();
   const buttons = [
     { id: 1, label: "Create", link: "/mainpage" },
     { id: 2, label: "Pens", link: "#" },
@@ -116,41 +116,47 @@ const IndexPage: React.FC<HomeProps> = () => {
   };
 
   const fetchPrivateData = async () => {
-    const { data, error } = await supabase
-      .from("NoteBooks")
-      .select("*")
-      .eq("Role", "private")
-      .eq("User_Id", Number(localStorage.getItem("userId")));
+    if (storedUserId) {
+      const { data, error } = await supabase
+        .from("NoteBooks")
+        .select("*")
+        .eq("Role", "private")
+        .eq("User_Id", storedUserId);
+      if (error) {
+        console.log(error);
+      }
 
-    if (error) {
-      console.log(error);
-    }
-
-    if (data?.length) {
-      setPrivateFile(data);
+      if (data?.length) {
+        setPrivateFile(data);
+      }
     }
   };
 
   const fetchRequests = async () => {
-    const { data, error } = await supabase
-      .from("Requests")
-      .select()
-      .eq("OwnerId", Number(localStorage.getItem("userId")))
-      .eq("status", "pending");
+    if (storedUserId) {
+      const { data, error } = await supabase
+        .from("Requests")
+        .select()
+        .eq("OwnerId", storedUserId)
+        .eq("status", "pending");
 
-    if (error) {
-      toast.error(error.message);
-    }
-    if (data?.length) {
-      setRequests(data);
-      // setReqStatus(data[0].status)
-    } else {
-      console.log("No Notifications");
+      if (error) {
+        toast.error(error.message);
+      }
+      if (data?.length) {
+        setRequests(data);
+        // setReqStatus(data[0].status)
+      } else {
+        console.log("No Notifications");
+      }
     }
   };
 
+  // ==================Doing Changes======================
+
   // to fetch realtime data from database
   useEffect(() => {
+    setStoredUserId(Number(localStorage.getItem("userId")));
     fetchPrivateData();
     fetchPublicData();
     fetchRequests();
@@ -203,6 +209,8 @@ const IndexPage: React.FC<HomeProps> = () => {
   //   fetchRequests();
   // }, []);
 
+  // const userId = localStorage.getItem("userId");
+
   return (
     <>
       <SidebarProvider>
@@ -241,7 +249,7 @@ const IndexPage: React.FC<HomeProps> = () => {
                     </Link>
                   </li>
 
-                  {localStorage.getItem("userId") && (
+                  {storedUserId && (
                     <li
                       className="bg-[#1E1F26] w-auto h-10 p-2  text-center "
                       style={{ fontSize: "17px", lineHeight: "25px" }}
@@ -291,7 +299,7 @@ const IndexPage: React.FC<HomeProps> = () => {
                       <PopoverHeader>
                         <PopoverTitle>Profile</PopoverTitle>
                         <PopoverDescription>
-                          {localStorage.getItem("userId") ? (
+                          {setStoredUserId!=null ? (
                             <Button
                               className="justify-end"
                               onClick={() => {

@@ -6,7 +6,6 @@ import MainPage from "./Component/MainPage";
 import ProductPage from "./product/[id]/page";
 import Link from "next/link";
 import IndexPage from "./index/page";
-import Page from "./dashboard/page";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 

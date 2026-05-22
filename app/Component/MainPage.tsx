@@ -149,56 +149,9 @@ const MainPage: React.FC<MainPageProps> = ({
       {/* <style>{css}</style> */}
 
       <div className="flex-none">
-        <div className="grid w-full grid-cols-12 gap-1 py-5 mx-auto  bg-black">
-          <Header
-            html={html}
-            css={css}
-            javascript={javascript}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            fileName={fileName}
-            setFileName={setFileName}
-            role={role}
-            setRole={setRole}
-          />
-        </div>
+    
 
-        <div
-          className={`grid w-full grid-cols-12 gap-2  relative bg-black`}
-          // style={{height:"600px"}}
-          style={{
-            height: `${rowHeight}px`,
-            minHeight: "220px",
-            maxHeight: "491px",
-          }}
-        >
-          <div className="col-span-4 h-full">
-            <CodeEditor
-              editValue={html}
-              setEditValue={setHtml}
-              language="html"
-            />
-          </div>
-
-          <div className="col-span-4 h-full">
-            <CodeEditor editValue={css} setEditValue={setCss} language="css" />
-          </div>
-
-          <div className="col-span-4 h-full">
-            <CodeEditor
-              editValue={javascript}
-              setEditValue={setJavascript}
-              language="javascript"
-            />
-          </div>
-
-          <div
-            className="col-span-12 absolute  bottom-0 left-0 w-full h-5 bg-gray-600 cursor-ns-resize hover:bg-sky-400 transition-colors"
-            // onClick={startResizing}
-            onMouseDown={startResizing}
-            // onMouseUp={startResizing}
-          ></div>
-        </div>
+     
       </div>
 
       <div className="flex-grow">
