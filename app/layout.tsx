@@ -58,22 +58,6 @@ export default function RootLayout({
       <Toaster position="top-right"/>
       {children}
 
-     {/* <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-
-
-        <TooltipProvider>
-
-
-
-
-      
-        </TooltipProvider>
-          </ThemeProvider> */}
         </body>
     </html>
   );
