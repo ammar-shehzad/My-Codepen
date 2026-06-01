@@ -224,7 +224,7 @@ const IndexPage: React.FC<HomeProps> = () => {
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset>
-          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 bg-[#0A0A0A]">
             <div className="flex w-full items-center gap-2 px-4 ">
               <SidebarTrigger className="-ml-1" />
               <Separator
@@ -239,7 +239,7 @@ const IndexPage: React.FC<HomeProps> = () => {
                     style={{ fontSize: "17px", lineHeight: "25px" }}
                   >
                     {" "}
-                    <Link href="/mainpage">Pen </Link>
+                    <Link href="/mainpage" className="text-white">Pen </Link>
                   </li>
 
                   <li
@@ -252,6 +252,7 @@ const IndexPage: React.FC<HomeProps> = () => {
                       onClick={() => {
                         setIspublic(true);
                       }}
+                      className="text-white"
                     >
                       Public
                     </Link>
@@ -268,6 +269,7 @@ const IndexPage: React.FC<HomeProps> = () => {
                         onClick={() => {
                           setIspublic(false);
                         }}
+                        className="text-white"
                       >
                         Your Work
                       </Link>
@@ -279,7 +281,7 @@ const IndexPage: React.FC<HomeProps> = () => {
                     style={{ fontSize: "17px", lineHeight: "25px" }}
                   >
                     {" "}
-                    <Link href="/mainpage">Trending </Link>
+                    <Link href="/mainpage" className="text-white">Trending </Link>
                   </li>
                 </ul>
 
@@ -385,12 +387,12 @@ const IndexPage: React.FC<HomeProps> = () => {
                       className="rounded-l-sm bg-[#2C303A] w-25 px-1.5"
                       placeholder="Search For ..."
                     />
-                    <button className="rounded-r-sm bg-[#444857] p-2">
+                    <button className="rounded-r-sm text-white bg-[#444857] p-2">
                       Search
                     </button>
                   </div>
 
-                  <button className="rounded-sm bg-[#444857] p-2 mx-3">
+                  <button className="rounded-sm text-white bg-[#444857] p-2 mx-3">
                     <i
                       className="fa-solid fa-filter"
                       style={{ color: "rgb(255, 255, 255)" }}
@@ -398,7 +400,7 @@ const IndexPage: React.FC<HomeProps> = () => {
                     Filter
                   </button>
 
-                  <button className="rounded-sm bg-[#444857] p-2">
+                  <button className="rounded-sm text-white bg-[#444857] p-2">
                     <i
                       className="fa-solid fa-tag"
                       style={{ color: "rgb(255, 255, 255)" }}

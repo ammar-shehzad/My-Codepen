@@ -48,13 +48,13 @@ export function NavProjects({
 <ul className="w-35 space-y-1" style={{fontSize:"17px",lineHeight:"25px"}}>
   <li className="bg-[#2C303A]  hover:bg-black ">
     <div className="py-0.5" style={{backgroundImage: "linear-gradient(to right, #ff007f 0%, #ff007f 5%, #ff7e5f 5%, #ff7e5f 10%, #ffe600 10%, #ffe600 15%, #86e3ce 15%, #86e3ce 20%, #00d2ff 20%, #00d2ff 300%)"}} ></div>
-     <Link className="flex py-2" href="/mainpage"><span><img src="/images/grid.png" alt="" className="w-7 " /></span> Pen </Link>
+     <Link className="flex py-2 text-white" href="/mainpage"><span><img src="/images/grid.png" alt="" className="w-7 " /></span> Pen </Link>
        </li>
   <li className="bg-[#2C303A] py-2 hover:bg-black ">
-     <Link className="flex" href="/"><span><img src="/images/grid.png" alt="" className="w-7 " /></span>Classic Pen </Link>
+     <Link className="flex text-white" href="/"><span><img src="/images/grid.png" alt="" className="w-7 " /></span>Classic Pen </Link>
        </li>
          <li className="bg-[#2C303A] py-2 hover:bg-black ">
-     <Link className="flex" href="/"><span><img src="/images/grid.png" alt="" className="w-7 " /></span> Collection </Link>
+     <Link className="flex text-white" href="/"><span><img src="/images/grid.png" alt="" className="w-7 " /></span> Collection </Link>
        </li>
 
 </ul>
@@ -66,7 +66,7 @@ export function NavProjects({
             <SidebarMenuButton asChild>
               <a href={item.url}>
                 {item.icon}
-                <span style={{fontSize:"17px",lineHeight:"17px"}}>{item.name}</span>
+                <span  style={{fontSize:"17px",lineHeight:"17px",color:"white"}}>{item.name}</span>
               </a>
             </SidebarMenuButton>
             <DropdownMenu>
