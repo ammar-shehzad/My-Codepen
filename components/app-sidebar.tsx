@@ -18,7 +18,7 @@ import { GalleryVerticalEndIcon, AudioLinesIcon, TerminalIcon, TerminalSquareIco
 // This is sample data.
 const data = {
   user: {
-    name: "shadcn",
+    name: "CodePen",
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
@@ -154,16 +154,14 @@ const data = {
       name: "New Pen",
       url: "/mainpage",
       icon: (
-        <FrameIcon
-        />
+<i className="fa-solid fa-hashtag" style={{color: "rgb(255, 255, 255)"}}></i>        
       ),
     },
     {
       name: "Activity",
       url: "#",
       icon: (
-        <PieChartIcon
-        />
+<i className="fa-solid fa-chart-pie" style={{color: "rgb(255, 255, 255)"}}></i>       
       ),
     },
  
@@ -177,8 +175,7 @@ const data = {
       name: "Following",
       url: "#",
       icon: (
-        <MapIcon
-        />
+     <i className="fa-solid fa-map" style={{color: "rgb(255, 255, 255)"}}></i>
       ),
     },
 
