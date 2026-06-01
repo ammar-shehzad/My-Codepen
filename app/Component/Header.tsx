@@ -46,14 +46,14 @@ const  router=useRouter()
 
 
 const handleView=()=>{
-// localStorage.setItem("html",html??"")
-// localStorage.setItem("css",css??"")
-// localStorage.setItem("javascript",javascript??"")
+localStorage.setItem("html",html??"")
+localStorage.setItem("css",css??"")
+localStorage.setItem("javascript",javascript??"")
 
 
-// window.open('/fulltabview','_blank')
+window.open('/fulltabview','_blank')
 
-alert("Preview")
+// alert("Preview")
 
 }
 
