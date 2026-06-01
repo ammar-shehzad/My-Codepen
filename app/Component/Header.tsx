@@ -230,7 +230,6 @@ if(updateError){
 
 useEffect(()=>{
 
-  setTimeout(() => {
     
 // let storeduser=localStorage.getItem("userId")
 // let storedBook=localStorage.getItem("BookId")
@@ -257,7 +256,6 @@ setOwnerId(Number(localStorage.getItem("ownerId")))
 
 
 
-},2000);
 
 fetchReqstatus()
 
