@@ -163,14 +163,14 @@ const fetchReqstatus=async()=>{
 
 
 
-if(userId && bookId){
-  console.log("UserId",userId)
+
+  console.log("UserId",localStorage.getItem("userId"))
   
 const { data, error } = await supabase
   .from('Requests')
   .select()
-  .eq('userId',userId)
-  .eq('bookId',bookId)
+  .eq('userId',Number(localStorage.getItem("userId")))
+  .eq('bookId',Number(localStorage.getItem("BookId")))
 
 if(error){
   toast.error(error.message)
@@ -182,13 +182,13 @@ if(data?.length){
 console.log("No Book")
 }
 
+
+
+
+
 }
 
-
-
-}
-
-
+// starting changes again
 
 
 
