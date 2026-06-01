@@ -67,7 +67,7 @@ if(html!=""){
 const { data, error } = await supabase
   .from('NoteBooks')
   .select('*')
-  .eq('User_Id',userId)
+  .eq('User_Id',Number(localStorage.getItem("userId")))
 // ===============starting changes==================
 if(error){
   toast.error(error.message)
@@ -94,8 +94,8 @@ if(error){
     Css : css,
     Javascript: javascript || "",
     Role: role,
-    User_Id:userId,
-    userName:userName
+    User_Id:Number(localStorage.getItem("userId")),
+    userName:localStorage.getItem("userName")
    })
 
 
@@ -123,16 +123,16 @@ if(InsertError){
 
 const handleRequestSubmit=async()=>{
 
-if(userId){
+if(localStorage.getItem("userId")){
   const { error } = await supabase
   .from('Requests')
   .insert({ 
-userId:userId,
-userName:userName,
-OwnerId:ownerId,
+userId:Number(localStorage.getItem("userId")),
+userName:localStorage.getItem("userName"),
+OwnerId:Number(localStorage.getItem("ownerId")),
 status:"pending",
 fileName:fileName,
-bookId:bookId
+bookId:Number(localStorage.getItem("BookId"))
 
 
    })
@@ -282,7 +282,7 @@ return(
     <i className="fa-solid fa-pen" style={{color: "rgb(254, 254, 254)"}} onClick={()=>setIsChangeName(true)} ></i>
     )}
 
-    <p className="text-white text-sm capitalize ml-3">{userName|| "No User"}</p>
+    <p className="text-white text-sm capitalize ml-3">{localStorage.getItem("userName")|| "No User"}</p>
   </span>
   :
 <form 
@@ -389,7 +389,7 @@ href="#"
 {
 reqStatus=='approved'?
 
-<Link href="#"  onClick={()=>handleFileEditByOtherUser(Number(bookId))}>
+<Link href="#"  onClick={()=>handleFileEditByOtherUser(Number(localStorage.getItem("BookId")))}>
 
 Save Changes
 </Link>
@@ -417,7 +417,7 @@ Edit Request
 
  {!publicView && (
  
-userId?
+localStorage.getItem("userId")?
 
  
   <li className="bg-[#1E1F26] w-20 h-10 py-3 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
