@@ -96,7 +96,7 @@ const IndexPage: React.FC<HomeProps> = () => {
   const [requests, setRequests] = useState<RequestItem[]>([]);
   const router = useRouter();
   const [activeTab, setActiveTab] = useState(2);
-  const [storedUserId, setStoredUserId] = useState<any>();
+  const [storedUserId, setStoredUserId] = useState<any>("");
   const buttons = [
     { id: 1, label: "Create", link: "/mainpage" },
     { id: 2, label: "Pens", link: "#" },
@@ -307,11 +307,11 @@ const IndexPage: React.FC<HomeProps> = () => {
                       <PopoverHeader>
                         <PopoverTitle>Profile</PopoverTitle>
                         <PopoverDescription>
-                          {setStoredUserId!=null ? (
+                          {storedUserId!="" ? (
                             <Button
                               className="justify-end"
                               onClick={() => {
-                                // localStorage.clear();
+                                localStorage.clear();
                                 setTimeout(() => {
                                   router.push("/");
                                 }, 2000);

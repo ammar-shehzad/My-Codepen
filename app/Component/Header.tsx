@@ -36,16 +36,24 @@ const Header:React.FC<HeaderProps>=({html,css,javascript,fileName,setFileName,ro
 const [isChangeName,setIsChangeName]=useState<boolean>(false)
 const[reqStatus,setReqStatus]=useState<string>("")
 
+// ===================all localstorage work================
+const[userId,setUserId]=useState<any>("")
+const[userName,setUserName]=useState<string>()
+const[bookId,setBookId]=useState<any>()
+const [ownerId,setOwnerId]=useState<number>()
+
 const  router=useRouter()
 
 
 const handleView=()=>{
-localStorage.setItem("html",html??"")
-localStorage.setItem("css",css??"")
-localStorage.setItem("javascript",javascript??"")
+// localStorage.setItem("html",html??"")
+// localStorage.setItem("css",css??"")
+// localStorage.setItem("javascript",javascript??"")
 
 
-window.open('/fulltabview','_blank')
+// window.open('/fulltabview','_blank')
+
+alert("Preview")
 
 }
 
@@ -59,8 +67,8 @@ if(html!=""){
 const { data, error } = await supabase
   .from('NoteBooks')
   .select('*')
-  .eq('User_Id',Number(localStorage.getItem("userId")))
-
+  .eq('User_Id',userId)
+// ===============starting changes==================
 if(error){
   toast.error(error.message)
   console.log(error.message)
@@ -77,6 +85,7 @@ if(error){
  }
 
 
+
     const { error:InsertError } = await supabase
   .from('NoteBooks')
   .insert({ 
@@ -85,9 +94,11 @@ if(error){
     Css : css,
     Javascript: javascript || "",
     Role: role,
-    User_Id:Number(localStorage.getItem("userId")),
-    userName:localStorage.getItem("userName")
+    User_Id:userId,
+    userName:userName
    })
+
+
 
 if(InsertError){
   console.log(InsertError.message)
@@ -112,16 +123,16 @@ if(InsertError){
 
 const handleRequestSubmit=async()=>{
 
-if(localStorage.getItem("userId")){
+if(userId){
   const { error } = await supabase
   .from('Requests')
   .insert({ 
-userId:localStorage.getItem("userId"),
-userName:localStorage.getItem("userName"),
-OwnerId:localStorage.getItem("ownerId"),
+userId:userId,
+userName:userName,
+OwnerId:ownerId,
 status:"pending",
 fileName:fileName,
-bookId:Number(localStorage.getItem("BookId"))
+bookId:bookId
 
 
    })
@@ -149,21 +160,31 @@ if(error){
 
 
 const fetchReqstatus=async()=>{
+
+
+
+if(userId && bookId){
+  console.log("UserId",userId)
+  
 const { data, error } = await supabase
   .from('Requests')
   .select()
-  .eq('userId',Number(localStorage.getItem("userId")))
-  .eq('bookId',Number(localStorage.getItem("BookId")))
+  .eq('userId',userId)
+  .eq('bookId',bookId)
 
 if(error){
   toast.error(error.message)
 }
 if(data?.length){
-  
+  alert("This Is Status"+data[0].status)
   setReqStatus(data[0].status)
 }else{
 console.log("No Book")
 }
+
+}
+
+
 
 }
 
@@ -208,7 +229,38 @@ if(updateError){
 
 
 useEffect(()=>{
-  fetchReqstatus()
+
+  setTimeout(() => {
+    
+// let storeduser=localStorage.getItem("userId")
+// let storedBook=localStorage.getItem("BookId")
+// let storedUname=localStorage.getItem("userName")
+// let storedOwner=localStorage.getItem("ownerId")
+setUserId(Number(localStorage.getItem("userId")))
+setUserName(String(localStorage.getItem("userName")))
+setBookId(Number(localStorage.getItem("BookId")))
+setOwnerId(Number(localStorage.getItem("ownerId")))
+// if(storeduser){
+  
+// }
+
+// if(storedUname){
+
+// }
+
+// if(storedBook){
+
+// }
+// if(storedOwner){
+
+// }
+
+
+
+},2000);
+
+fetchReqstatus()
+
 },[])
 
 
@@ -232,7 +284,7 @@ return(
     <i className="fa-solid fa-pen" style={{color: "rgb(254, 254, 254)"}} onClick={()=>setIsChangeName(true)} ></i>
     )}
 
-    <p className="text-white text-sm capitalize ml-3">{localStorage.getItem("userName")|| "No User"}</p>
+    <p className="text-white text-sm capitalize ml-3">{userName|| "No User"}</p>
   </span>
   :
 <form 
@@ -339,7 +391,7 @@ href="#"
 {
 reqStatus=='approved'?
 
-<Link href="#"  onClick={()=>handleFileEditByOtherUser(Number(localStorage.getItem("BookId")))}>
+<Link href="#"  onClick={()=>handleFileEditByOtherUser(Number(bookId))}>
 
 Save Changes
 </Link>
@@ -367,7 +419,7 @@ Edit Request
 
  {!publicView && (
  
- localStorage.getItem("userId")?
+userId?
 
  
   <li className="bg-[#1E1F26] w-20 h-10 py-3 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
