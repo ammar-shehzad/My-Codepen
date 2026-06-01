@@ -21,6 +21,10 @@ import { SheetSide } from "@/components/bottom-console";
 // import CodeEditor from "./CodeEditor";
 // import Header from "./Header";
 
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+
+
 interface MainPageProps {
   // html: string | undefined;
   // setHtml: Dispatch<SetStateAction<string | undefined>>;
