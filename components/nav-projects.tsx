@@ -34,7 +34,7 @@ export function NavProjects({
   const { isMobile } = useSidebar()
 
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+    <SidebarGroup className="group-data-[collapsible=icon]:hidden text-white">
       <SidebarGroupLabel>Create </SidebarGroupLabel>
       <SidebarMenu>
  {/* <SidebarMenuItem className="p-3 " style={{background: "linear-gradient(to right, #ff007f0%, #ff007f 5%, #ff7e5f 5%, #ff7e5f 10%, #ffe600 10%, #ffe600 15%, #86e3ce 15%,#86e3ce 20%, #00d2ff 20%, #00d2ff 100%)"
