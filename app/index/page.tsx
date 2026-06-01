@@ -298,7 +298,7 @@ const IndexPage: React.FC<HomeProps> = () => {
 
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button variant="outline" className="border-0">
+                      <Button   className="border-0 bg-[#1C1C1C]">
                         <i
                           className="fa-solid fa-user"
                           style={{ color: "rgb(243, 245, 248)" }}
