@@ -103,6 +103,13 @@ const IndexPage: React.FC<HomeProps> = () => {
     { id: 3, label: "Collections", link: "#" },
     { id: 4, label: "Deleted", link: "#" },
   ];
+let userExist; 
+
+if(localStorage.getItem("userId")){
+  userExist=Number(localStorage.getItem("userId"))
+  console.log("userExist = "+ userExist)
+}
+
 
   const fetchPublicData = async () => {
     const { data, error } = await supabase
@@ -258,7 +265,7 @@ const IndexPage: React.FC<HomeProps> = () => {
                     </Link>
                   </li>
 
-                  {storedUserId && (
+                  {userExist && (
                     <li
                       className="bg-[#1E1F26] w-auto h-10 p-2  text-center "
                       style={{ fontSize: "17px", lineHeight: "25px" }}
