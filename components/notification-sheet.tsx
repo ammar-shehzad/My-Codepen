@@ -58,10 +58,12 @@ if(error){
   toast.error(error.message)
 }else{
 toast.success("Request Accepted")
-setTimeout(() => {
-  fetchRequests()
-}, 2000);
+// setTimeout(() => {
+//   fetchRequests()
+// }, 2000);
+fetchRequests()
 }
+
 
 
 
@@ -97,11 +99,10 @@ setTimeout(() => {
       <SheetTrigger  asChild>
         <Button className="bg-[#1C1C1C]"><i className="fa-solid fa-bell" style={{color: "rgb(255, 212, 59)"}}></i></Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="bg-[#131417]">
         <SheetHeader>
           <SheetTitle>Notifications</SheetTitle>
           <SheetDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
           </SheetDescription>
         </SheetHeader>
         {/* <div className="grid flex-1 auto-rows-min gap-6 px-4">
@@ -115,7 +116,10 @@ setTimeout(() => {
           </div>
         </div> */}
 
-{requests.map((r: any) => {
+{
+requests.length>0 &&(
+
+requests.map((r: any) => {
   return (
     <div key={r.id}>
 
@@ -136,7 +140,10 @@ r.status!='approved' &&(
     </div>
     </div>
   )
-})}
+})
+
+)
+}
 
 
         <SheetFooter>

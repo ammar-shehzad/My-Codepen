@@ -152,12 +152,25 @@ const IndexPage: React.FC<HomeProps> = () => {
       if (error) {
         toast.error(error.message);
       }
-      if (data?.length) {
-        setRequests(data);
-        // setReqStatus(data[0].status)
-      } else {
-        console.log("No Notifications");
-      }
+      
+          setRequests([]); 
+
+    // 2. Optional chaining (?.) use karein taake empty array par crash na ho
+    if (data && data.length > 0) {
+      setRequests(data);
+    } else {
+      setRequests([]); // Agar koi request nahi bachi
+    }
+
+      
+      // if (data?.length) {
+      //   setRequests(data);
+
+
+        
+      // } else {
+      //   console.log("No Notifications");
+      // }
     }
   };
 
@@ -195,7 +208,7 @@ const IndexPage: React.FC<HomeProps> = () => {
         "postgres_changes",
         { event: "*", schema: "public", table: "Requests" },
         (payload) => {
-          console.log("Change received for cards!", payload);
+          console.log("Change received for Requests!", payload);
 
           fetchPrivateData();
           fetchPublicData();
