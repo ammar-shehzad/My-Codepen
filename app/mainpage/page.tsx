@@ -407,7 +407,7 @@ const MainPage: React.FC<MainPageProps> = ({
             <ResizablePanel defaultSize={60}>
               <div className="flex h-full">
                 <div className="flex h-auto w-full ">
-                  <div className="grid grid-cols-12 w-full h-full">
+                  <div className="grid grid-cols-12 w-full h-auto">
                     <div className="col-span-12">
                       {/* 
       <div
