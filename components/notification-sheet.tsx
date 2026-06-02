@@ -124,12 +124,12 @@ requests.map((r: any) => {
     <div key={r.id} >
 
     <div   className="relative h-[100px] p-5  rounded-xl bg-[#1E1F26]" key={r.id || r.userName}>
-      <p className="text-light">You Have Received a Request By {String(r.userName)} to edit file " {r.fileName} "</p>
+      <p className="text-white">You Have Received a Request By {String(r.userName)} to edit file " {r.fileName} "</p>
 
 {
 r.status!='approved' &&(
   <div className="absolute bottom-2 left-2 right-2 flex justify-end gap-2">
-      <Button onClick={()=>editRequestStatus(r.id)} className="bg-white">Accept</Button>
+      <Button onClick={()=>editRequestStatus(r.id)} className="bg-white"><span className="text-black">Accept</span> </Button>
       <Button variant="destructive" onClick={()=>editRequestStatusToCancel(r.id)}> <span className="text-white">Cancel</span> </Button>
   </div>
 )
