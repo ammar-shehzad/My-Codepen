@@ -373,7 +373,7 @@ const MainPage: React.FC<MainPageProps> = ({
             orientation="vertical"
             className=" h-full w-full rounded-lg border"
           >
-            <ResizablePanel defaultSize={100}>
+            <ResizablePanel defaultSize={80}>
               <div className="flex h-full items-center justify-center">
                 <div className="grid grid-cols-12 w-full h-full">
                   <div className="col-span-4 h-full">
@@ -404,9 +404,9 @@ const MainPage: React.FC<MainPageProps> = ({
               </div>
             </ResizablePanel>
             <ResizableHandle />
-            <ResizablePanel defaultSize={75}>
+            <ResizablePanel defaultSize={60}>
               <div className="flex h-full">
-                <div className="flex h-full w-full ">
+                <div className="flex h-auto w-full ">
                   <div className="grid grid-cols-12 w-full h-full">
                     <div className="col-span-12">
                       {/* 
@@ -427,7 +427,7 @@ const MainPage: React.FC<MainPageProps> = ({
                         title="output"
                         sandbox="allow-scripts allow-modals allow-same-origin"
                         width="100%"
-                        height="300px"
+                        height="auto"
                       />
                     </div>
                   </div>
