@@ -42,6 +42,7 @@ const[userName,setUserName]=useState<string>()
 const[bookId,setBookId]=useState<any>()
 const [ownerId,setOwnerId]=useState<number>()
 
+const[isDataSaved,setIsDataSaved]=useState(false)
 const  router=useRouter()
 
 
@@ -63,11 +64,15 @@ window.open('/fulltabview','_blank')
 
 const handleFileSubmit=async()=>{
 if(html!=""){
-  
+  if(fileName!="Untitled"){  
+
 const { data, error } = await supabase
   .from('NoteBooks')
   .select('*')
-  .eq('User_Id',Number(localStorage.getItem("userId")))
+  .eq('BookName',fileName)
+
+  // .eq('User_Id',Number(localStorage.getItem("userId")))
+
 // ===============starting changes==================
 if(error){
   toast.error(error.message)
@@ -77,14 +82,16 @@ if(error){
  console.log( data[0])
   
  
- if(data.length>0){
-//  if(data[0].BookName==fileName){
-//     toast.error("File Already Exist With This Name")
-//     return
-//   }
+ if(data && data.length>0){
+  alert("data")
+ if(data[0].BookName==fileName && data[0].User_Id==localStorage.getItem("userId")){
+    toast.error("File Already Exist With This Name")
+    return
+  }
  }
 
-
+}
+}
 
     const { error:InsertError } = await supabase
   .from('NoteBooks')
@@ -105,10 +112,12 @@ if(InsertError){
   toast.error(InsertError.message)
 }else{
   toast.success("NoteBook Saved SuccessFully")
+  setIsDataSaved(true)
+
 }
 
   
-}
+
 
 
 }else{
@@ -119,6 +128,69 @@ if(InsertError){
  
   
 }
+
+
+
+const handleFileSaveAgain=async()=>{
+
+
+const { data, error } = await supabase
+  .from('NoteBooks')
+  .select('*')
+  .eq('BookName',fileName)
+
+  // .eq('User_Id',Number(localStorage.getItem("userId")))
+
+// ===============starting changes==================
+if(error){
+  toast.error(error.message)
+  console.log(error.message)
+
+}else{
+ console.log( data[0])
+  
+ 
+ if(data && data.length>0){
+  alert("data")
+ if(data[0].BookName==fileName && data[0].User_Id==localStorage.getItem("userId")){
+
+
+    const { error:UpdateError } = await supabase
+  .from('NoteBooks')
+  .update({ 
+    BookName: fileName,
+    Html: html,
+    Css : css,
+    Javascript: javascript || "",
+    Role: role,
+    User_Id:Number(localStorage.getItem("userId")),
+    userName:localStorage.getItem("userName")
+   })
+   .eq('BookName',fileName)
+
+
+
+
+if(UpdateError){
+  console.log(UpdateError.message)
+  toast.error(UpdateError.message)
+}else{
+  toast.success("NoteBook Edited SuccessFully")
+  setIsDataSaved(true)
+
+}
+
+
+  }
+ }
+
+}
+
+
+
+
+}
+
 
 
 const handleRequestSubmit=async()=>{
@@ -414,12 +486,13 @@ Edit Request
 
 {/* <li className="bg-[#1E1F26] w-30 h-10 py-3 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>Saveee</li> */}
   
-
+{/* savingggg */}
 
  {!publicView && (
  
 localStorage.getItem("userId")?
 
+!isDataSaved?
  
   <li className="bg-[#1E1F26] w-20 h-10 py-3 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
 
@@ -432,6 +505,24 @@ localStorage.getItem("userId")?
   <i className="fa-solid fa-cloud mx-0.5" style={{color:' rgb(255, 255, 255)'}}></i>
 
   Save
+</Link>
+
+
+  </li>
+
+:
+
+  <li className="bg-[#1E1F26] w-20 h-10 py-3 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}>
+
+
+<Link href="#" 
+  // type="button" 
+  // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
+  onClick={handleFileSaveAgain}
+>
+  <i className="fa-solid fa-cloud mx-0.5" style={{color:' rgb(255, 255, 255)'}}></i>
+
+  Save Again
 </Link>
 
 
