@@ -137,11 +137,11 @@ const IndexPage: React.FC<HomeProps> = () => {
   };
 
   const fetchRequests = async () => {
-    if (storedUserId) {
+    if (localStorage.getItem("userId")) {
       const { data, error } = await supabase
         .from("Requests")
         .select()
-        .eq("OwnerId", storedUserId)
+        .eq("OwnerId", Number(localStorage.getItem("userId")))
         .eq("status", "pending");
 
       if (error) {
