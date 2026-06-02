@@ -63,8 +63,8 @@ export function NavProjects({
 
         {projects.map((item) => (
           <SidebarMenuItem key={item.name} className="space-y-3 ">
-            <SidebarMenuButton asChild>
-              <a className="hover:bg-black hover:text-white" href={item.url}>
+            <SidebarMenuButton className="hover:bg-green-500" asChild>
+              <a  href={item.url}>
                 {item.icon}
                 <span style={{fontSize:"17px",lineHeight:"17px",color:"white"}}>{item.name}</span>
               </a>
