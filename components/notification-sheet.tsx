@@ -129,8 +129,8 @@ requests.map((r: any) => {
 {
 r.status!='approved' &&(
   <div className="absolute bottom-2 left-2 right-2 flex justify-end gap-2">
-      <Button onClick={()=>editRequestStatus(r.id)}>Accept</Button>
-      <Button variant="destructive" onClick={()=>editRequestStatusToCancel(r.id)}>Cancel</Button>
+      <Button onClick={()=>editRequestStatus(r.id)} className="bg-white">Accept</Button>
+      <Button variant="destructive" onClick={()=>editRequestStatusToCancel(r.id)}> <span className="text-white">Cancel</span> </Button>
   </div>
 )
 }
