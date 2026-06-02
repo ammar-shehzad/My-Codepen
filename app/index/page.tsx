@@ -103,7 +103,7 @@ const IndexPage: React.FC<HomeProps> = () => {
     { id: 3, label: "Collections", link: "#" },
     { id: 4, label: "Deleted", link: "#" },
   ];
-let userExist=Number(localStorage.getItem("userId")); 
+// let userExist=Number(localStorage.getItem("userId")); 
 
 
  
@@ -170,9 +170,10 @@ let userExist=Number(localStorage.getItem("userId"));
 //    if(localStorage.getItem("userId")){
 //   userExist=Number(localStorage.getItem("userId"))
 // }
-console.log("userExist = "+ userExist)
 
     setStoredUserId(Number(localStorage.getItem("userId")));
+
+
     fetchPrivateData();
     fetchPublicData();
     fetchRequests();
@@ -220,6 +221,11 @@ console.log("userExist = "+ userExist)
   }, []);
 
 
+  useEffect(() => {
+    console.log("Nayi State:", storedUserId);
+  }, [storedUserId]); 
+
+
 
   // const userId = localStorage.getItem("userId");
 
@@ -265,7 +271,7 @@ console.log("userExist = "+ userExist)
                     </Link>
                   </li>
 
-                  {userExist && (
+                  {storedUserId && (
                     <li
                       className="bg-[#1E1F26] w-auto h-10 p-2  text-center "
                       style={{ fontSize: "17px", lineHeight: "25px" }}
@@ -316,11 +322,12 @@ console.log("userExist = "+ userExist)
                       <PopoverHeader>
                         <PopoverTitle>Profile</PopoverTitle>
                         <PopoverDescription>
-                          {userExist ? (
+                          {storedUserId ? (
                             <Button
                               className="justify-end"
                               onClick={() => {
-                                localStorage.clear();
+                                // localStorage.clear();
+                                setStoredUserId(null)
                                 setTimeout(() => {
                                   router.push("/");
                                 }, 2000);
