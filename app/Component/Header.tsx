@@ -27,11 +27,13 @@ setFileName:Dispatch<SetStateAction<string>>
   role:string,
   setRole:Dispatch<SetStateAction<string>>,
   publicView:boolean,
-  setPublicView:Dispatch<SetStateAction<boolean>>
+  setPublicView:Dispatch<SetStateAction<boolean>>,
+    isPrivate:boolean,
+
 
 }
 
-const Header:React.FC<HeaderProps>=({html,css,javascript,fileName,setFileName,role,setRole,publicView,setPublicView})=>{
+const Header:React.FC<HeaderProps>=({html,css,javascript,fileName,setFileName,role,setRole,publicView,setPublicView,isPrivate})=>{
 
 const [isChangeName,setIsChangeName]=useState<boolean>(false)
 const[reqStatus,setReqStatus]=useState<string>("")
@@ -484,7 +486,7 @@ Edit Request
   
 {/* savingggg */}
 
- {!publicView && (
+ {!publicView && !isPrivate && (
  
 localStorage.getItem("userId")?
 
@@ -544,6 +546,20 @@ localStorage.getItem("userId")?
     )}
 
 
+
+{isPrivate &&(
+
+<li className="bg-[#1E1F26] w-30 h-10 py-3 rounded-l-sm text-center text-white " style={{fontSize:"15px",lineHeight:"18px"}}> 
+
+  <Link href="#"  onClick={()=>handleFileEditByOtherUser(Number(localStorage.getItem("BookId")))}>
+
+Save Changes
+</Link>
+</li>
+)
+
+
+}
 
 
 

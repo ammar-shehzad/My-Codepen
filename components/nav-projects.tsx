@@ -62,11 +62,11 @@ export function NavProjects({
         </SidebarMenuItem>
 
         {projects.map((item) => (
-          <SidebarMenuItem key={item.name} className="space-y-3">
+          <SidebarMenuItem key={item.name} className="space-y-3 ">
             <SidebarMenuButton asChild>
-              <a href={item.url}>
+              <a className="hover:bg-black hover:text-white" href={item.url}>
                 {item.icon}
-                <span  style={{fontSize:"17px",lineHeight:"17px",color:"white"}}>{item.name}</span>
+                <span style={{fontSize:"17px",lineHeight:"17px",color:"white"}}>{item.name}</span>
               </a>
             </SidebarMenuButton>
             <DropdownMenu>

@@ -98,6 +98,8 @@ const MainPage: React.FC<MainPageProps> = ({
   }>();
 
   const [publicView, setPublicView] = useState<boolean>(false);
+  const [isPrivate, setIsPrivate] = useState<boolean>(false);
+
   const [hasMounted, setHasMounted] = useState<boolean>(false);
   let orignalLogRef = useRef(console.log);
 
@@ -142,7 +144,16 @@ const MainPage: React.FC<MainPageProps> = ({
             localStorage.setItem("fileName", data[0].BookName);
             localStorage.setItem("BookId", data[0].id);
 
-            setPublicView(true);
+
+if(data[0].Role=="public"){
+  setPublicView(true);
+
+}else{
+  setPublicView(false);
+  setIsPrivate(true)
+
+}
+
           }
         }
       };
@@ -364,6 +375,7 @@ const MainPage: React.FC<MainPageProps> = ({
             setRole={setRole}
             publicView={publicView}
             setPublicView={setPublicView}
+            isPrivate={isPrivate}
           />
         </div>
 
