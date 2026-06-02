@@ -258,7 +258,7 @@ const IndexPage: React.FC<HomeProps> = () => {
                     </Link>
                   </li>
 
-                  {localStorage.getItem("userId") && (
+                  {storedUserId && (
                     <li
                       className="bg-[#1E1F26] w-auto h-10 p-2  text-center "
                       style={{ fontSize: "17px", lineHeight: "25px" }}
@@ -309,7 +309,7 @@ const IndexPage: React.FC<HomeProps> = () => {
                       <PopoverHeader>
                         <PopoverTitle>Profile</PopoverTitle>
                         <PopoverDescription>
-                          {storedUserId!="" ? (
+                          {localStorage.getItem("userId") ? (
                             <Button
                               className="justify-end"
                               onClick={() => {
