@@ -335,8 +335,8 @@ setStoredUserName(localStorage.getItem("userName"))
                     </PopoverTrigger>
                     <PopoverContent className="bg-black w-40" align="start">
                       <PopoverHeader>
-                        <PopoverTitle className="text-center">Profile</PopoverTitle>
-                        <PopoverDescription className="text-center">
+                        <PopoverTitle className="text-whight">Profile</PopoverTitle>
+                        <PopoverDescription className="">
                           <h5 className="capitalize my-2 text-white">{storedUserName || "No User"}</h5>
                           {storedUserId ? (
                             <Button
