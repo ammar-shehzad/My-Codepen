@@ -207,8 +207,11 @@ const data = {
 
   ],
 }
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  storedUserName: any; 
+}
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({storedUserName ,...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon" {...props} className="w-50 bg-gray-500">
       <SidebarHeader>
