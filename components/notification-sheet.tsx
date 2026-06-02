@@ -100,8 +100,8 @@ setTimeout(() => {
         <Button className="bg-[#1C1C1C]"><i className="fa-solid fa-bell" style={{color: "rgb(255, 212, 59)"}}></i></Button>
       </SheetTrigger>
       <SheetContent className="bg-[#131417]">
-        <SheetHeader>
-          <SheetTitle>Notifications</SheetTitle>
+        <SheetHeader >
+          <SheetTitle className="text-white">Notifications</SheetTitle>
           <SheetDescription>
           </SheetDescription>
         </SheetHeader>
