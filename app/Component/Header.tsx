@@ -79,11 +79,9 @@ if(error){
   console.log(error.message)
 
 }else{
- console.log( data[0])
   
  
  if(data && data.length>0){
-  alert("data")
  if(data[0].BookName==fileName && data[0].User_Id==localStorage.getItem("userId")){
     toast.error("File Already Exist With This Name")
     return
@@ -147,11 +145,9 @@ if(error){
   console.log(error.message)
 
 }else{
- console.log( data[0])
   
  
  if(data && data.length>0){
-  alert("data")
  if(data[0].BookName==fileName && data[0].User_Id==localStorage.getItem("userId")){
 
 
@@ -520,9 +516,9 @@ localStorage.getItem("userId")?
   // className="text-white bg-[#5A5F73] box-border border border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded-md text-sm px-4 py-2.5 focus:outline-none"
   onClick={handleFileSaveAgain}
 >
-  <i className="fa-solid fa-cloud mx-0.5" style={{color:' rgb(255, 255, 255)'}}></i>
+  <i className="fa-solid fa-pen mx-0.5" style={{color:' rgb(255, 255, 255)'}}></i>
 
-  Save Again
+  Edit
 </Link>
 
 
