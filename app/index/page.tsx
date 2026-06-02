@@ -97,6 +97,7 @@ const IndexPage: React.FC<HomeProps> = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState(2);
   const [storedUserId, setStoredUserId] = useState<any>("");
+  const[storedUserName,setStoredUserName]=useState<any>("")
   const buttons = [
     { id: 1, label: "Create", link: "/mainpage" },
     { id: 2, label: "Pens", link: "#" },
@@ -185,7 +186,7 @@ const IndexPage: React.FC<HomeProps> = () => {
 // }
 
     setStoredUserId(Number(localStorage.getItem("userId")));
-
+setStoredUserName(localStorage.getItem("userName"))
 
     fetchPrivateData();
     fetchPublicData();
@@ -235,8 +236,8 @@ const IndexPage: React.FC<HomeProps> = () => {
 
 
   useEffect(() => {
-    console.log("Nayi State:", storedUserId);
-  }, [storedUserId]); 
+    console.log("Nayi State:", storedUserId ,"</br> Naya User: ",storedUserName);
+  }, [storedUserId,storedUserName]); 
 
 
 
@@ -335,6 +336,7 @@ const IndexPage: React.FC<HomeProps> = () => {
                       <PopoverHeader>
                         <PopoverTitle>Profile</PopoverTitle>
                         <PopoverDescription>
+                          <h5 className="capitalize">{storedUserName || "No User"}</h5>
                           {storedUserId ? (
                             <Button
                               className="justify-end"

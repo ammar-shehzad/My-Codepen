@@ -18,7 +18,7 @@ import { GalleryVerticalEndIcon, AudioLinesIcon, TerminalIcon, TerminalSquareIco
 // This is sample data.
 const data = {
   user: {
-    name: "CodePen",
+    name: localStorage.getItem("userName") || "No User",
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
   },

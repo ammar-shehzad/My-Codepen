@@ -34,10 +34,10 @@ export function NavUser({
   const { isMobile } = useSidebar()
 
   return (
-    <SidebarMenu>
-      <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+    <SidebarMenu >
+      <SidebarMenuItem >
+        <DropdownMenu >
+          <DropdownMenuTrigger className="hover:bg-[#262626]" asChild>
             <SidebarMenuButton
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
@@ -47,7 +47,7 @@ export function NavUser({
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium text-white">{user.name}</span>
+                <span className="truncate capitalize font-medium text-white">{user.name}</span>
                 {/* <span className="truncate text-xs">{user.email}</span> */}
               </div>
               {/* <ChevronsUpDownIcon className="ml-auto size-4" /> */}
