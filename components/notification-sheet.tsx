@@ -121,9 +121,9 @@ requests.length>0 &&(
 
 requests.map((r: any) => {
   return (
-    <div key={r.id}>
+    <div key={r.id} >
 
-    <div   className="relative h-[100px] p-5  rounded-xl bg-muted/50" key={r.id || r.userName}>
+    <div   className="relative h-[100px] p-5  rounded-xl bg-[#1E1F26]" key={r.id || r.userName}>
       <p>You Have Received a Request By {String(r.userName)} to edit file " {r.fileName} "</p>
 
 {
