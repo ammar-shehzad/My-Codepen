@@ -105,10 +105,7 @@ const IndexPage: React.FC<HomeProps> = () => {
   ];
 let userExist; 
 
-if(localStorage.getItem("userId")){
-  userExist=Number(localStorage.getItem("userId"))
-  console.log("userExist = "+ userExist)
-}
+
 
 
   const fetchPublicData = async () => {
@@ -168,6 +165,10 @@ if(localStorage.getItem("userId")){
 
   // to fetch realtime data from database
   useEffect(() => {
+    if(localStorage.getItem("userId")){
+  userExist=Number(localStorage.getItem("userId"))
+  console.log("userExist = "+ userExist)
+}
     setStoredUserId(Number(localStorage.getItem("userId")));
     fetchPrivateData();
     fetchPublicData();
