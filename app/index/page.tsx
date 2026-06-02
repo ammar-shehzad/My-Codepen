@@ -120,12 +120,12 @@ const IndexPage: React.FC<HomeProps> = () => {
   };
 
   const fetchPrivateData = async () => {
-    if (storedUserId) {
+    if (localStorage.getItem("userId")) {
       const { data, error } = await supabase
         .from("NoteBooks")
         .select("*")
         .eq("Role", "private")
-        .eq("User_Id", storedUserId);
+        .eq("User_Id", Number(localStorage.getItem("userId")));
       if (error) {
         console.log(error);
       }
@@ -137,11 +137,11 @@ const IndexPage: React.FC<HomeProps> = () => {
   };
 
   const fetchRequests = async () => {
-    if (storedUserId) {
+    if (localStorage.getItem("userId")) {
       const { data, error } = await supabase
         .from("Requests")
         .select()
-        .eq("OwnerId", storedUserId)
+        .eq("OwnerId", Number(localStorage.getItem("userId")))
         .eq("status", "pending");
 
       if (error) {
@@ -258,7 +258,7 @@ const IndexPage: React.FC<HomeProps> = () => {
                     </Link>
                   </li>
 
-                  {storedUserId && (
+                  {localStorage.getItem("userId") && (
                     <li
                       className="bg-[#1E1F26] w-auto h-10 p-2  text-center "
                       style={{ fontSize: "17px", lineHeight: "25px" }}
@@ -309,7 +309,7 @@ const IndexPage: React.FC<HomeProps> = () => {
                       <PopoverHeader>
                         <PopoverTitle>Profile</PopoverTitle>
                         <PopoverDescription>
-                          {storedUserId!="" ? (
+                          {localStorage.getItem("userId") ? (
                             <Button
                               className="justify-end"
                               onClick={() => {
