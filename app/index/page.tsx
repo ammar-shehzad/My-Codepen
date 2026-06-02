@@ -324,7 +324,7 @@ setStoredUserName(localStorage.getItem("userName"))
 
                   <div className="flex-1 mx-1" />
 
-                  <Popover>
+                  <Popover >
                     <PopoverTrigger asChild>
                       <Button   className="border-0 bg-[#1C1C1C]">
                         <i
@@ -333,10 +333,10 @@ setStoredUserName(localStorage.getItem("userName"))
                         ></i>
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent align="start">
+                    <PopoverContent className="bg-black w-40" align="start">
                       <PopoverHeader>
-                        <PopoverTitle>Profile</PopoverTitle>
-                        <PopoverDescription>
+                        <PopoverTitle className="text-center">Profile</PopoverTitle>
+                        <PopoverDescription className="text-center">
                           <h5 className="capitalize my-2 text-white">{storedUserName || "No User"}</h5>
                           {storedUserId ? (
                             <Button
