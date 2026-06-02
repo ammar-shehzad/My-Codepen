@@ -120,12 +120,12 @@ const IndexPage: React.FC<HomeProps> = () => {
   };
 
   const fetchPrivateData = async () => {
-    if (storedUserId) {
+    if (localStorage.getItem("userId")) {
       const { data, error } = await supabase
         .from("NoteBooks")
         .select("*")
         .eq("Role", "private")
-        .eq("User_Id", storedUserId);
+        .eq("User_Id", Number(localStorage.getItem("userId")));
       if (error) {
         console.log(error);
       }
