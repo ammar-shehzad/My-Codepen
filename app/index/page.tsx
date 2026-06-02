@@ -103,13 +103,10 @@ const IndexPage: React.FC<HomeProps> = () => {
     { id: 3, label: "Collections", link: "#" },
     { id: 4, label: "Deleted", link: "#" },
   ];
-let userExist; 
+let userExist=Number(localStorage.getItem("userId")); 
 
 
-    if(localStorage.getItem("userId")){
-  userExist=Number(localStorage.getItem("userId"))
-  console.log("userExist = "+ userExist)
-}
+ 
 
 
   const fetchPublicData = async () => {
@@ -170,6 +167,11 @@ let userExist;
   // to fetch realtime data from database
   useEffect(() => {
 
+//    if(localStorage.getItem("userId")){
+//   userExist=Number(localStorage.getItem("userId"))
+// }
+console.log("userExist = "+ userExist)
+
     setStoredUserId(Number(localStorage.getItem("userId")));
     fetchPrivateData();
     fetchPublicData();
@@ -217,9 +219,7 @@ let userExist;
     };
   }, []);
 
-  useEffect(() => {
-console.log("storedUserId = "+storedUserId)
-  }, [storedUserId]);
+
 
   // const userId = localStorage.getItem("userId");
 
