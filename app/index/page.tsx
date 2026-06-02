@@ -165,10 +165,10 @@ let userExist;
 
   // to fetch realtime data from database
   useEffect(() => {
-    if(localStorage.getItem("userId")){
-  userExist=Number(localStorage.getItem("userId"))
-  console.log("userExist = "+ userExist)
-}
+//     if(localStorage.getItem("userId")){
+//   userExist=Number(localStorage.getItem("userId"))
+//   console.log("userExist = "+ userExist)
+// }
     setStoredUserId(Number(localStorage.getItem("userId")));
     fetchPrivateData();
     fetchPublicData();
@@ -317,7 +317,7 @@ let userExist;
                       <PopoverHeader>
                         <PopoverTitle>Profile</PopoverTitle>
                         <PopoverDescription>
-                          {localStorage.getItem("userId") ? (
+                          {userExist ? (
                             <Button
                               className="justify-end"
                               onClick={() => {
